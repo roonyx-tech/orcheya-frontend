@@ -1,0 +1,16 @@
+<section class="content-header">
+  <h1>{{(section$ | async)?.title}}</h1>
+</section>
+<section class="content">
+  <div *ngIf="(section$ | async) as section; else loading">
+    <ul class="sections-list">
+      <li *ngFor="let question of section.questions">
+        <div class="question">{{ question.title }}</div>
+        <p [innerHTML]="transformContent(question.answer?.content)" class="answer"></p>
+      </li>
+    </ul>
+  </div>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
+</section>

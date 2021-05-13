@@ -1,0 +1,48 @@
+@import 'variables';
+
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.content {
+  background: $gray-50;
+  color: $gray-900;
+}
+
+.box {
+  background: $white;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(55,71,79,0.5);
+}
+
+textarea {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.header-with-date {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+}
+
+.box-header:before,
+.box-header:after {
+  content: none;
+}
+
+.date {
+  color: $primary-text-color;
+}
+
+.old-update-message {
+  font-size: 20px;
+  padding: 10px;
+}
+
+@media (max-width: 767px) {
+  .box {
+    width: unset;
+  }
+}

@@ -1,0 +1,38 @@
+@import '_variables';
+
+.comment {
+  width: 300px;
+  height: auto;
+  position: relative;
+  background-color: $blue;
+  border: 1px solid $blue;
+  border-radius: 10px 0 10px 10px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  color: $white;
+  box-shadow: 0 0 5px $white;
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: -1px;
+    top: -10px;
+    border-style: solid;
+    border-width: 12px 12px 12px 12px;
+    border-color: transparent $blue transparent transparent ;
+  }
+
+  &-author {
+    font-size: 16px;
+    color: $white;
+    text-decoration: underline;
+  }
+
+  &-text {
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+}

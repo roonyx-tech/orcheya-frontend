@@ -1,0 +1,17 @@
+<div class="modal-header" *ngIf="skill">
+  <h4 class="modal-title pull-left">
+    Delete {{ skill.title }}
+  </h4>
+  <button type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body centered">
+  <h4>Are you sure?</h4>
+  <button class="btn btn-primary" (click)="delete()">Yes</button>
+  <button class="btn btn-default" (click)="close()">No</button>
+</div>

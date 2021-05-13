@@ -1,0 +1,57 @@
+<div class="box" *ngIf="user; else users" [ngClass]="getClass(data)">
+  <div class="box-body box-profile">
+    <div class="col-xs-4 no-padding">
+      <img class="img-responsive avatar"
+           [src]="user?.avatar.medium"
+           alt="User profile picture"
+           appImageUpload
+           [disable]="!isCurrentUser"
+           (fileChange)="onChange($event)">
+    </div>
+    <div class="col-xs-8">
+      <h3 class="profile-username text-center">{{ user?.fullName }}</h3>
+      <h5 [style.font-size]="'13px'" class="text-center">{{ user?.nameCyrillic }}</h5>
+      <div class="text-secondary text-center">
+        <span *ngFor="let role of user?.roles">{{ role.name }} </span>
+        <div class="balance-info" *ngIf="data && data.timerOn">
+          <h4>
+            {{ data.balance | duration }}
+            <span *ngIf="data.balance">{{ data.balance < 0 ? 'underperformed' : 'overtime' }}</span>
+          </h4>
+          <h6>{{ data.workedOut | duration }} of {{ data.workingTime | duration }}</h6>
+          <small>{{ data.start | date }} - {{ data.finish | date }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #users>
+  <div *ngFor="let user of bestUsers" class="box" [ngClass]="getClass(user.workTime)" style="margin-right: 20px">
+    <div class="box-body box-profile" [routerLink]="['/user-profile', user.id]">
+      <a class="col-xs-4 no-padding">
+        <img class="img-responsive avatar"
+             [src]="user?.avatar.medium"
+             alt="User profile picture"
+             appImageUpload
+             [disable]="!isCurrentUser"
+             (fileChange)="onChange($event)">
+      </a>
+      <div class="col-xs-8">
+        <h3 class="profile-username text-center"><a [routerLink]="['/user-profile', user.id]">{{ user?.fullName }}</a></h3>
+        <h5 [style.font-size]="'13px'" class="text-center">{{ user?.nameCyrillic }}</h5>
+        <div class="text-secondary text-center">
+          <span *ngFor="let role of user?.roles">{{ role.name }} </span>
+          <div class="balance-info" *ngIf="user.workTime && user.workTime.timerOn">
+            <h4>
+              {{ user.workTime.balance | duration }}
+              <span *ngIf="user.workTime.balance">{{ user.workTime.balance < 0 ? 'underperformed' : 'overtime' }}</span>
+            </h4>
+            <h6>{{ user.workTime.workedOut | duration }} of {{ user.workTime.workingTime | duration }}</h6>
+            <small>{{ user.workTime.start | date }} - {{ user.workTime.finish | date }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

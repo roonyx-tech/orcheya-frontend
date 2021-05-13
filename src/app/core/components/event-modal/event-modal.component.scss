@@ -1,0 +1,43 @@
+@import 'variables';
+
+.box-body {
+  background-color: $white;
+  color: $gray-900;
+}
+
+.btn-group {
+  .btn-light {
+    background-color: $white;
+    border-color: $gray-100;
+    border-radius: 4px;
+    color: $gray-900;
+  }
+  .active {
+    background-color: $gray-50;
+  }
+}
+
+.modal-header {
+  padding: 0 0 15px;
+}
+
+.timepicker {
+  width: 65px;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.input-group-btn:last-child > .timepicker { 
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.input-group-btn:first-child > .timepicker {
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+textarea {
+  width: 100%;
+}

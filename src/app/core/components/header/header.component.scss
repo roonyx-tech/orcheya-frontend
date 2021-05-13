@@ -1,0 +1,87 @@
+@import "variables";
+
+header {
+  box-shadow: 1px 0px 5px 0px rgba(55,71,79,0.15);
+}
+
+.navbar {
+  display: flex;
+  .sidebar-toggle {
+    width: 50%;
+    @media screen and (max-width: 800px) {
+      width: 20%;
+    }
+  }
+  .search-skill {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    .dropdown-menu {
+      left: unset;
+      max-height: 265px;
+      overflow: auto;
+    }
+    @media screen and (max-width: 800px) {
+      width: 80%;
+    }
+    &-input {
+      display: flex;
+      align-items: center;
+      width: 35%;
+      @media screen and (max-width: 800px) {
+        width: 65%;
+      }
+    }
+  }
+}
+
+.modal-header-user {
+  background-color: $white;
+  box-shadow: 0 5px 20px rgba(55, 71, 79, 0.2);
+  border-color: $white;
+  border-radius: 0 0 4px 4px;
+  .user-header {
+    background-color: $white;
+  }
+  .user-footer .btn-light {
+    background-color: $white;
+    color: $gray-900;
+    &:hover {
+      background-color: $azure-500;
+      color: $white;
+    }
+  }
+}
+
+.img-circle {
+  cursor: pointer;
+}
+
+.img-coins {
+  height: 20px !important;
+  width: 20px !important;
+}
+
+.logo {
+  padding: 0 7px;
+
+  img {
+    width: 150px;
+    height: 50px;
+  }
+}
+
+.hidden-toggle-button {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .hidden-toggle-button {
+    display: unset;
+  }
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}

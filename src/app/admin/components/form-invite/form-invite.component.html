@@ -1,0 +1,204 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="invite">
+  <div class="box-header">
+    <h1>{{ !userId ? 'Create' : 'Update' }} a new user</h1>
+  </div>
+
+  <form *ngIf="form" class="form-horizontal" [formGroup]="form">
+    <div class="box-form">
+      <div class="box-form-user">
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('name')}">
+          <div class="control-label">
+            <label for="name">First name*</label>
+          </div>
+          <div>
+            <input class="form-control"
+                   id="name"
+                   placeholder="Enter name"
+                   formControlName="name">
+            <span class="help-block">{{ textError('name') }}</span>
+          </div>
+        </div>
+
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('surname')}">
+          <div class="control-label">
+            <label for="surname">Last name*</label>
+          </div>
+          <div>
+            <input class="form-control"
+                   id="surname"
+                   placeholder="Enter surname"
+                   formControlName="surname">
+            <span class="help-block">{{ textError('surname') }}</span>
+          </div>
+        </div>
+
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('sex')}">
+          <div class="control-label">
+            <label for="sex-male">Sex*</label>
+          </div>
+          <div class="sex">
+            <div>
+              <input type="radio"
+                     id="sex-male"
+                     [value]="1"
+                     class="custom-control-input"
+                     formControlName="sex">
+              <label for="sex-male">Male</label>
+            </div>
+            <div>
+              <input type="radio"
+                     id="sex-female"
+                     [value]="2"
+                     class="custom-control-input"
+                     formControlName="sex">
+              <label for="sex-female">Female</label>
+            </div>
+            <span class="help-block">{{ textError('sex') }}</span>
+          </div>
+        </div>
+
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('role')}">
+          <div class="control-label">
+            <label for="roles">Role*</label>
+          </div>
+          <div>
+            <ng-select *ngIf="!userId; else updateRole"
+                       [items]="roles"
+                       id="roles"
+                       bindLabel="name"
+                       bindValue="id"
+                       class="dark-select custom"
+                       placeholder="Select Role"
+                       [clearable]="false"
+                       [closeOnSelect]="true"
+                       [hideSelected]="true"
+                       formControlName="role"
+                       (change)="showDocumentRole($event)">
+            </ng-select>
+
+            <ng-template #updateRole>
+              <select type="text"
+                      class="form-control"
+                      id="roles"
+                      formControlName="role"
+                      (change)="showDocumentRole($event.target.value)">
+                <option *ngFor="let role of roles" [value]="role.id">
+                  {{ role.name }}
+                </option>
+              </select>
+            </ng-template>
+
+            <span class="help-block">{{ textError('role') }}</span>
+          </div>
+        </div>
+
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('employmentAt')}">
+          <div class="control-label">
+            <label for="employmentAt">Hiring date*</label>
+          </div>
+          <div>
+            <input class="form-control"
+                   id="employmentAt"
+                   bsDatepicker
+                   [bsConfig]="{dateInputFormat: 'DD-MM-YYYY'}"
+                   placeholder="Enter hiring date"
+                   formControlName="employmentAt">
+            <span class="help-block">{{ textError('employmentAt') }}</span>
+          </div>
+        </div>
+
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('workingHours')}">
+          <div class="control-label">
+            <label for="workingHours">Working hours*</label>
+          </div>
+          <div>
+            <input class="form-control"
+                   id="workingHours"
+                   placeholder="Enter working hours"
+                   formControlName="workingHours">
+            <span class="help-block">{{ textError('workingHours') }}</span>
+          </div>
+        </div>
+
+        <div class="box-form-user-input"
+             [ngClass]="{'has-error': hasError('email')}">
+          <div class="control-label">
+            <label for="email">Email*</label>
+          </div>
+          <div>
+            <input class="form-control"
+                   id="email"
+                   placeholder="Enter email"
+                   formControlName="email">
+            <span class="help-block">{{ textError('email') }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div formGroupName="onboardingAttributes"  class="box-form-checkbox">
+        <div *ngFor="let group of groups" class="box-form-checkbox-group">
+          <h1>{{ group.title }}</h1>
+          <div>
+            <div *ngFor="let checkbox of group.checkbox">
+              <input type="checkbox"
+                     [ngModelOptions]="{standalone: true}" [(ngModel)]="checkbox.status"
+                     id="checkbox-tool-{{ checkbox.id }}">
+              <label for="checkbox-tool-{{ checkbox.id }}" class="control-label">{{ checkbox.name }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div formGroupName="onboardingAttributes">
+      <div class="box-header">
+        <h1>Gmail</h1>
+      </div>
+      <p>Please, create an email and write temporary login and password here</p>
+      <div class="box-form">
+        <div class="box-form-user">
+          <div class="box-form-user-input"
+               [ngClass]="{'has-error': hasError('gmailLogin', onBoarding)}">
+            <div class="control-label">
+              <label for="login">Login*</label>
+            </div>
+            <div>
+              <input class="form-control"
+                     id="login"
+                     placeholder="Enter login"
+                     formControlName="gmailLogin">
+              <span class="help-block">{{ textError('gmailLogin', onBoarding) }}</span>
+            </div>
+          </div>
+          <div class="box-form-user-input"
+               [ngClass]="{'has-error': hasError('gmailPassword', onBoarding)}">
+            <div class="control-label">
+              <label for="password">Password*</label>
+            </div>
+            <div>
+              <input type="password"
+                     class="form-control"
+                     id="password"
+                     formControlName="gmailPassword"
+                     placeholder="Enter password">
+              <span class="help-block">{{ textError('gmailPassword', onBoarding) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="form" class="box-footer">
+    <button (click)="cancelInvite()" class="btn btn-danger">Cancel</button>
+    <button (click)="workingInvite()" [disabled]="form.invalid" class="btn btn-success">{{ !userId ? 'Create' : 'Update' }}</button>
+  </div>
+</div>

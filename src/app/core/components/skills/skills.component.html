@@ -1,0 +1,35 @@
+<div [formGroup]="searchSkill">
+  <input class="form-control"
+         id="skillName"
+         placeholder="Enter skill name"
+         formControlName="skillName"/>
+</div>
+<div class="legend">
+  <div class="legend-item" *ngFor="let item of legend">
+    <span [class]="item.style"></span>
+    - {{ item.title }}
+  </div>
+</div>
+<div *ngIf="isCurrUser; else visit">
+  <app-current-user-skills *ngIf="userSkills && allSkills &&
+                                  difficultyLevels && !isEmptySkills()"
+                           [userSkills]="userSkills"
+                           [allSkills]="allSkills"
+                           [difficultyLevels]="difficultyLevels"
+                           [user]="user">
+  </app-current-user-skills>
+  <app-skill-offer *ngIf="isEmptySkills() && difficultyLevels"
+                   [difficultyLevels]="difficultyLevels">
+  </app-skill-offer>
+</div>
+
+<ng-template #visit>
+  <app-user-skills *ngIf="userSkills && difficultyLevels;"
+                   [userSkills]="userSkills"
+                   [user]="user"
+                   [difficultyLevels]="difficultyLevels">
+  </app-user-skills>
+  <h4 class="no-skills" *ngIf="!userSkills || !userSkills.length">
+    User has no skills
+  </h4>
+</ng-template>

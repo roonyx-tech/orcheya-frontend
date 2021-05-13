@@ -1,0 +1,63 @@
+@import 'variables';
+
+.manager-user {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  display: grid;
+  min-height: 0;
+}
+
+.copy-invite {
+  display: flex;
+  justify-content: space-between;
+  width: 440px;
+  cursor: pointer;
+  padding: 5px 5px 5px 0;
+  &:hover {
+    color: $black;
+    background-color: $green;
+    border-radius: 5px;
+  }
+}
+
+.invite-block {
+  padding: 10px;
+}
+
+.discord-icon {
+  height: 14px;
+  width: 14px;
+}
+
+.notifications-off {
+  opacity: .3;
+}
+
+.integrations {
+  display: flex;
+  justify-content: flex-start;
+
+  .icon-container {
+    width: 15px;
+  }
+
+  * {
+    margin-right: 7px;
+  }
+}
+
+.nav-tabs-custom {
+  position: relative;
+}
+
+.tab-content tr > th:first-child,
+.tab-content tr > td:first-child {
+  text-align: center;
+}
+
+.item-list {
+  padding-left: 15px;
+}

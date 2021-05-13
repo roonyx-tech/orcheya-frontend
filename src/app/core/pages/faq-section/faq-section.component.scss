@@ -1,0 +1,12 @@
+@import 'variables';
+
+.answer {
+  color: $second-text-color;
+  word-break: break-word;
+}
+
+.question {
+  font-size: 16px;
+  font-weight: 600;
+  word-break: break-word;
+}

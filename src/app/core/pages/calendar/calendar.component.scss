@@ -1,0 +1,61 @@
+@import '_variables';
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.modal {
+  background-color: transparent;
+}
+
+ng-select {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.calendar-wrapper {
+  padding: 10px;
+}
+
+::ng-deep {
+  #filter-dropdown {
+    padding: 6px 10px 8px;
+    background-color: $white;
+    border-color: $blue-500;
+    color: $blue-500;
+    border-radius: 4px;
+  }
+
+  .user-image-resource {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .user-image-event {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+}
+
+::ng-deep {
+  .fc-day-grid :hover.fc-content {
+    background-color: rgba(0,0,0,.1);
+  }
+  :hover.fc-list-item, .fc-list-heading {
+    color: $black;
+  }
+  .fc-list-empty {
+    color: $black;
+    font-size: 24px;
+  }
+  .user-image-event {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+}

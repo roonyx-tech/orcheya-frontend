@@ -1,0 +1,265 @@
+<div class="modal-header" *ngIf="user">
+  <h4 class="modal-title pull-left">
+    {{ user.name }} {{ user.surname }}
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<form role="form"
+      *ngIf="user"
+      class="form-horizontal"
+      [formGroup]="form"
+      (submit)="updateSettings()">
+  <div class="box-body">
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('name')}">
+      <label for="name" class="col-sm-2 control-label">Name*</label>
+      <div class="col-sm-10">
+        <input class="form-control"
+               id="name"
+               placeholder="Enter name"
+               formControlName="name">
+        <span class="help-block">{{ textError('name') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('surname')}">
+      <label for="surname" class="col-sm-2 control-label">Surname*</label>
+      <div class="col-sm-10">
+        <input class="form-control"
+               id="surname"
+               placeholder="Enter surname"
+               formControlName="surname">
+        <span class="help-block">{{ textError('surname') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+      [ngClass]="{ 'has-error': hasError('nameCyrillic') }">
+      <label for="nameCyrillic" class="col-sm-2 control-label">Name Cyrillic</label>
+      <div class="col-sm-10">
+       <input class="form-control"
+            id="nameCyrillic"
+            placeholder="Enter cyrillic name"
+            formControlName="nameCyrillic">
+      <span class="help-block">{{ textError('nameCyrillic') }}</span>
+      </div>
+    </div>
+
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('birthday')}">
+      <label for="birthday" class="col-sm-2 control-label">Birth date*</label>
+      <div class="col-sm-10">
+        <input bsDatepicker
+               [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+               class="form-control"
+               id="birthday"
+               placeholder="Enter birth date"
+               formControlName="birthday">
+        <span class="help-block">{{ textError('birthday') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('employmentAt')}">
+      <label for="employmentAt" class="col-sm-2 control-label two-level">Hiring date</label>
+      <div class="col-sm-10">
+        <input bsDatepicker
+               [bsConfig]="{dateInputFormat: 'DD-MM-YYYY'}"
+               class="form-control"
+               id="employmentAt"
+               placeholder="Enter hiring date"
+               formControlName="employmentAt">
+        <span class="help-block">{{ textError('employmentAt') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('sex')}">
+      <div class="col-sm-10 col-sm-offset-2">
+        <div class="custom-control custom-radio">
+          <input type="radio"
+                id="sex-male"
+                value="male"
+                class="custom-control-input"
+                formControlName="sex">
+          <label for="sex-male" class="custom-control-label">Male</label>
+          <input type="radio"
+                id="sex-female"
+                value="female"
+                class="custom-control-input"
+                formControlName="sex">
+          <label for="sex-female" class="custom-control-label">Female</label>
+          <span class="help-block">{{ textError('sex') }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('phone')}">
+      <label for="phone" class="col-sm-2 control-label">Phone*</label>
+      <div class="col-sm-10">
+        <input class="form-control"
+               id="phone"
+               placeholder="Enter phone"
+               formControlName="phone"
+               [appMask]="form.get('phone')">
+        <span class="help-block">{{ textError('phone') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('email')}">
+      <label for="email" class="col-sm-2 control-label">Email*</label>
+      <div class="col-sm-10">
+        <input type="email"
+               class="form-control"
+               id="email"
+               placeholder="Enter email"
+               formControlName="email">
+        <span class="help-block">{{ textError('email') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('timingId')}">
+      <label for="timingId" class="col-sm-2 control-label">Timing*</label>
+      <div class="col-sm-10">
+        <select type="text"
+                class="form-control"
+                id="timingId"
+                formControlName="timingId">
+          <option *ngFor="let timing of timings" [value]="timing.id">
+            {{ timing.time }}
+          </option>
+        </select>
+        <span class="help-block">{{ textError('timingId') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('workingHours')}">
+      <label for="workingHours" class="col-sm-2 control-label two-level">Working hours</label>
+      <div class="col-sm-10">
+        <input type="workingHours"
+               class="form-control"
+               id="workingHours"
+               placeholder="Enter working hours"
+               formControlName="workingHours">
+        <span class="help-block">{{ textError('workingHours') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('newVacationDays')}">
+      <label for="newVacationDays" class="col-sm-2 control-label two-level">New vacation days</label>
+      <div class="col-sm-10">
+        <input type="newVacationDays"
+               class="form-control"
+               id="newVacationDays"
+               placeholder="Enter count of vacation days (Now available {{user.availableVacationsDays}})"
+               formControlName="newVacationDays">
+        <span class="help-block">{{ textError('newVacationDays') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('roles')}">
+      <label for="roles" class="col-sm-2 control-label">Roles*</label>
+      <div class="col-sm-10">
+        <ng-select
+          bindLabel="name"
+          placeholder="Select roles"
+          [items]="roles"
+          class="dark-select"
+          [multiple]="true"
+          [typeahead]="typeahead"
+          [hideSelected]="true"
+          [(ngModel)]="selectedRoles"
+          (change)="onRoleChanged($event)"
+          formControlName="roles">
+        </ng-select>
+        <span class="help-block">{{ textError('roles') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('skype')}">
+      <label for="skype" class="col-sm-2 control-label">Skype</label>
+      <div class="col-sm-10">
+        <input class="form-control"
+               id="skype"
+               placeholder="Enter skype"
+               formControlName="skype">
+        <span class="help-block">{{ textError('skype') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         [ngClass]="{'has-error': hasError('discordName')}">
+      <label for="discordName" class="col-sm-2 control-label">Discord</label>
+      <div class="col-sm-10">
+        <input class="form-control"
+               id="discordName"
+               placeholder="Enter discord"
+               formControlName="discordName">
+        <span class="help-block">{{ textError('discordName') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="about" class="col-sm-2 control-label">CV</label>
+      <div class="col-sm-10">
+       <textarea autosize type="text" class="form-control" placeholder="Enter CV"
+                 id="about" formControlName="about" maxlength="400"></textarea>
+        <span class="help-block">{{ textError('about') }}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="checkbox-vacation" class="col-sm-2 col-xs-2 text-right">Vacation notifier disabled</label>
+      <div class="col-sm-2 col-xs-2">
+        <input type="checkbox" id="checkbox-vacation" formControlName="vacationNotifier">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="checkbox-link" class="col-sm-2 col-xs-2 text-right">Link</label>
+      <div class="col-sm-2 col-xs-2">
+        <input type="checkbox" id="checkbox-link" (click)="linkToggle()">
+      </div>
+      <label *ngIf="showLink && saveLinks.length === 0">No links</label>
+    </div>
+
+    <div *ngIf="showLink">
+      <ng-container formArrayName="userLinks" *ngFor="let link of form.get('userLinks')?.controls; let i = index;">
+        <div [formGroupName]="i" class="form-group">
+          <label for="link-{{ i }}" class="col-sm-2 control-label">
+            <i class="fa icon {{ makeIconClassName(kinds[i]) }}" [class.error-message]="link.invalid"></i>
+          </label>
+          <div class="col-sm-10">
+            <input [class.input-error]="link.invalid"
+                   type="email"
+                   class="form-control"
+                   id="link-{{ i }}"
+                   placeholder="Enter link"
+                   formControlName="link">
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <button class="btn btn-primary"
+                [disabled]="form.invalid">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

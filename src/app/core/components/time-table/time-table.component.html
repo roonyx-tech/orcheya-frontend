@@ -1,0 +1,47 @@
+<main [style.width]="width">
+  <br *ngIf="!projects.length">
+  <div class="toolbar">
+    <div class="total-month">
+      Month Time: <span class="bold">{{ totalMonthTime }}</span>
+    </div>
+    <div class="current-month">
+      {{ selectedMonth.title + ' ' + selectedMonth.year }}
+    </div>
+    <div class="months">
+      <select class="form-control" title=""
+              #select
+              [ngModel]="currentMonth"
+              (change)="onChange(select.value)">
+        <option *ngFor="let month of sortByOrder(months)"
+                [value]="month.position">
+          {{ month.title + ' ' + month.year }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="calendar">
+    <div class="calendar__header">
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
+      <div>Sun</div>
+      <div>Total</div>
+    </div>
+    <div class="calendar__week"
+         *ngFor="let week of selectedMonth.weeks"
+         [ngClass]="{ current: (nowMonth === selectedMonth.position && nowWeek === week.position) }">
+      <ng-container *ngFor="let day of week.days; let i = index">
+        <div class="calendar__day day">
+          <div class="date">{{ day.day }}</div>
+          <span>{{ day.textTime }}</span>
+        </div>
+        <div class="calendar__day day total" *ngIf="i + 1 === week.days.length">
+           {{ week.totalText }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</main>

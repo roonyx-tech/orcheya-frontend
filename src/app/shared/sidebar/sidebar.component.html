@@ -1,0 +1,36 @@
+<aside class="main-sidebar" #sideBar>
+  <section class="sidebar">
+    <ul class="sidebar-menu tree">
+      <li class="treeview"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}"
+          *ngFor="let group of sidebarService.menu"
+          [class.menu-open]="group === currentGroup">
+        <ng-container *ngIf="group.single; else multiGroup">
+          <a [routerLink]="group.link">
+            <i class="fa" [ngClass]="group.icon"></i>
+            <span>{{ group.name }}</span>
+          </a>
+        </ng-container>
+        <ng-template #multiGroup>
+          <a (click)="toggleGroup(group)">
+            <i class="fa" [ngClass]="group.icon"></i><span>{{ group.name }}</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+          </a>
+          <ul class="treeview-menu">
+            <li *ngFor="let item of group.items" routerLinkActive="active">
+              <a [routerLink]="item.link"><i class="fa fa-circle-o"></i> {{ item.name }}</a>
+            </li>
+          </ul>
+        </ng-template>
+      </li>
+      <li routerLinkActive="active"
+          class="faq-item">
+        <a [routerLink]="['/faq']">
+          <i class="fa fa-question"></i>
+          <span>Help</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</aside>

@@ -1,0 +1,7 @@
+<div class="integrations">
+  <a class="btn btn-block"
+     [ngClass]="connected ? 'btn-outline-primary' : 'btn-primary'"
+     (click)="onClick()">
+    {{ connected ? 'Disconnect' : 'Connect' }}
+  </a>
+</div>

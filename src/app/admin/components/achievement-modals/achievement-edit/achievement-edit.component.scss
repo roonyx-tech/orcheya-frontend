@@ -1,0 +1,48 @@
+@import 'variables';
+
+.type {
+  &-radio {
+    padding: 0 0 5px 5px;
+
+    &-control {
+      margin-right: 6px;
+    }
+  
+    &-label {
+      margin-right: 20px;
+    }
+  }
+}
+
+.img-notifier {
+  margin-top: 5px;
+  color: $c-search-text-green;
+}
+
+.endpoint:first-letter {
+  text-transform: uppercase;
+}
+
+.select-all {
+  margin-top: 25px;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+  max-height: 55px;
+}
+
+.tier-line {
+  margin-top: 15px;
+
+  .fraction {
+    margin-bottom: 20px;
+  }
+
+  span {
+    padding-top: 5px;
+  }
+}
+
+.form-group {
+  margin-right: 0;
+}

@@ -1,0 +1,88 @@
+<div class="modal-header" *ngIf="skill">
+  <h4 class="modal-title pull-left">
+    {{ skill.title }}
+  </h4>
+  <button type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form role="form"
+        *ngIf="skill"
+        class="form-horizontal"
+        [formGroup]="form">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">Title*</label>
+        <div class="col-sm-10">
+          <input class="form-control"
+                 id="title"
+                 placeholder="Enter skill name"
+                 formControlName="title">
+          <span class="help-block">{{ textError('title') }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="difficulty" class="col-sm-2 control-label">
+          Difficulty*
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control"
+                  id="difficulty"
+                  formControlName="difficultyLevelId">
+            <option *ngFor="let difficulty of difficultyLevels"
+                    [value]="difficulty.id">
+              {{ difficulty.title }}
+            </option>
+          </select>
+          <span class="help-block">{{ textError('difficultyLevelId') }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="skill-type" class="col-sm-2 control-label">
+          Skill type
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control"
+                  id="skill-type"
+                  formControlName="skillTypeId">
+            <option *ngFor="let type of skillTypes | async"
+                    [value]="type.id">
+              {{ type.title }}
+            </option>
+          </select>
+          <span class="help-block">{{ textError('skillTypeId') }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="variants" class="col-sm-2 control-label">Tags</label>
+        <div class="col-sm-10">
+          <textarea class="form-control"
+                    id="variants"
+                    formControlName="variants"
+                    placeholder="Ror, rails">
+          </textarea>
+        </div>
+      </div>
+      <div>
+        <label for="approved" class="control-label">
+            <span class="col-sm-2">Approved</span>
+            <input lass="form-control"
+                   type="checkbox"
+                   formControlName="approved">
+        </label>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary"
+          [disabled]="form.invalid"
+          (click)="onSubmit()">
+    Submit
+  </button>
+</div>

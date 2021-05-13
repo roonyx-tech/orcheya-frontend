@@ -1,0 +1,15 @@
+<div class="input-group calendar-period">
+  <span class="input-group-btn">
+    <button class="btn btn-primary" [disabled]="!this.dates" (click)="subtractTime()"> < </button>
+  </span>
+
+  <input class="form-control"
+         placeholder="Choose dates"
+         bsDaterangepicker
+         [bsConfig]="bsConfig"
+         [ngModel]="dates"
+         (bsValueChange)="valueChanged($event)">
+  <span class="input-group-btn">
+    <button class="btn btn-primary" [disabled]="!this.dates" (click)="addTime()"> > </button>
+  </span>
+</div>

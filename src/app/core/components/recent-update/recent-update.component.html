@@ -1,0 +1,31 @@
+<hr>
+<div *ngIf="lastUpdate">
+  <div class="with-border">
+    <h3 class="box-title">Recent update - {{ showDate(lastUpdate.date, 'D MMM, YYYY') }}</h3>
+  </div>
+
+  <div class="box-body">
+    <strong><i class="fa fa-thumbs-o-up margin-r-5"></i> Task(s) I did today:</strong>
+    <p class="text-secondary"
+       *ngFor="let madeLine of lastUpdate.made.split('\n')"
+       [innerHTML]="madeLine">
+    </p>
+
+    <hr>
+
+    <strong><i class="fa fa-check-square-o margin-r-5"></i> What I plan for tomorrow:</strong>
+    <p class="text-secondary"
+       *ngFor="let planLine of lastUpdate.planning.split('\n')"
+       [innerHTML]="planLine">
+    </p>
+
+    <hr>
+
+    <strong><i class="fa fa-frown-o margin-r-5"></i> Any issues:</strong>
+    <p class="text-secondary"
+       *ngFor="let issueLine of lastUpdate.issues.split('\n')"
+       [innerHTML]="issueLine">
+    </p>
+
+  </div>
+</div>

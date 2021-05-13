@@ -1,0 +1,27 @@
+@import 'variables';
+
+.input-group {
+  padding: 0 12px;
+}
+
+.box-body:before,
+.box-body:after {
+  content: none;
+}
+
+.button-block {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input-error {
+  border-color: $red;
+}
+
+.error-message {
+  color: $red;
+}
+
+.icon {
+  font-size: 20px;
+}

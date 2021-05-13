@@ -1,0 +1,61 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="login-box">
+  <div>
+    <img src="/assets/company-logo.svg" alt="Orcheya">
+  </div>
+  <div class="login-box-body">
+    <p class="login-title">Sign in to start your session</p>
+    <span class="server-error text-red" *ngIf="serverError">{{ serverError }}</span>
+
+    <form [formGroup]="form" (ngSubmit)="signIn()" class="login-form">
+      <div class="form-group has-feedback"
+           [class.has-error]="form.get('email').invalid && (form.get('email').touched || form.get('email').dirty)">
+        <input type="email"
+               class="form-control"
+               name="email"
+               placeholder="Email"
+               formControlName="email">
+        <div *ngIf="form.get('email').invalid && (form.get('email').touched || form.get('email').dirty)">
+          <span class="help-block" *ngIf="form.get('email').errors.required">
+            Email can't be empty.
+          </span>
+          <span class="help-block" *ngIf="form.get('email').errors.email">
+            Incorrect Email.
+          </span>
+        </div>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback"
+           [class.has-error]="form.get('password').invalid && (form.get('password').touched || form.get('password').dirty)">
+        <input type="password"
+               class="form-control"
+               placeholder="Password"
+               name="password"
+               formControlName="password">
+        <div *ngIf="form.get('password').invalid && (form.get('password').touched || form.get('password').dirty)">
+          <span class="help-block" *ngIf="form.get('password').errors.required">
+            Password can't be empty.
+          </span>
+        </div>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row row-center">
+        <div class="col-xs-8">
+          <a [routerLink]="['/reset-password']">
+            Forgot password?
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <button type="submit"
+                  [disabled]="form.invalid"
+                  class="btn btn-primary btn-block">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="login-logo">
+    <img src="/assets/orcheya-logo.svg" alt="Orcheya" class="opacity">
+  <div>
+</div>

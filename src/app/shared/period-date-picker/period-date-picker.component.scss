@@ -1,0 +1,20 @@
+@import "variables";
+
+.calendar-period {
+  ::ng-deep .btn-primary {
+    background-color: $azure-500;
+    border-color: $azure-500;
+    color: $white;
+    border-radius: 4px;
+    &:hover {
+      background-color: $azure-700;
+    }
+  }
+  .active {
+    background-color: $azure-700;
+  }
+  ::ng-deep input {
+    background-color: $white;
+    border-color: $gray-100;
+  }
+}

@@ -1,0 +1,25 @@
+@import '_variables';
+
+.group {
+  display: flex;
+  &-role { margin-right: 20px; }
+  &-star {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: $black;
+    clip-path: $star;
+    &-inner {
+        width: 25px;
+        height: 25px;
+        clip-path: $star;
+    }
+    cursor: pointer;
+      &:hover {
+        width: 40px;
+        height: 40px;
+      }
+    }
+}

@@ -1,0 +1,11 @@
+.modal-body {
+  height: 270px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .body-wrap {
+    width: 80%;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,46 @@
+@import "variables";
+.cell {
+  padding: 8px;
+  &.danger {
+    //background-color: #ff000040;
+
+    .worked { color: $red-600 }
+  }
+  &.success {
+    //background-color: #00800040;
+
+    .worked { color: $green-700 }
+  }
+}
+
+.progress {
+  position: relative;
+  height: 7px;
+  margin: 0;
+
+  .progress-bar {
+    background-color: $green-600;
+  }
+
+  .all-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #d4dadb;
+  }
+
+  .paid-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: $green-600;
+  }
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+}
+

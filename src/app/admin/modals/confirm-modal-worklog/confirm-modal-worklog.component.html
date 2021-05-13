@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <span>Do you confirm?</span>
+</div>
+
+<div class="modal-body" *ngIf="worklogControlState">
+  <div>User owner: {{ worklogControlState.userOwnerName.search }}</div>
+  <div>User worker: {{ worklogControlState.userWorkerName.search }}</div>
+  <div>Project: {{ worklogControlState.projectName }}</div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" (click)="confirmation(true)">
+    Yes
+  </button>
+  <button class="btn btn-danger" (click)="confirmation(false)">
+    No
+  </button>
+</div>

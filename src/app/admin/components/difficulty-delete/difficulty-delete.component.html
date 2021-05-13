@@ -1,0 +1,18 @@
+<div class="modal-header" *ngIf="difficulty">
+  <h4 class="modal-title pull-left">
+    Delete {{ difficulty.title }}
+  </h4>
+  <button type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body centered">
+  <h4>Are you sure?</h4>
+  <div class="help-block">{{ error }}</div>
+  <button class="btn btn-primary" (click)="delete()">Yes</button>
+  <button class="btn btn-default" (click)="close()">No</button>
+</div>

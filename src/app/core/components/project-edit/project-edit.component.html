@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ project.id ? 'Edit' : 'New' }} project</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form role="form"
+        [formGroup]="form"
+        (submit)="save()">
+    <div class="box-body">
+      <div class="form-group" [ngClass]="{'has-error': hasError('title')}">
+        <label for="title" class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-10">
+          <input class="form-control"
+                 id="title"
+                 placeholder="Enter our project name"
+                 formControlName="title">
+          <span class="help-block">{{ textError('title') }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="managerId" class="col-sm-2 control-label">
+          Manager
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control" id="managerId" formControlName="managerId">
+            <option *ngFor="let manager of managers" [value]="manager.id">
+              {{ manager.title }}
+            </option>
+          </select>
+          <span class="help-block">{{ textError('managerId') }}</span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': hasError('paid')}">
+        <label for="paid" class="col-sm-12 col-sm-offset-2 control-label">
+          <input id="paid" type="checkbox" formControlName="paid"> Paid?
+        </label>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': hasError('archived')}">
+        <label for="archived" class="col-sm-12 col-sm-offset-2 control-label">
+          <input id="archived" type="checkbox" formControlName="archived"> Archived?
+        </label>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary"
+          [disabled]="form.invalid"
+          (click)="save()">
+    Submit
+  </button>
+</div>

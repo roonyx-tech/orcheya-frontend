@@ -1,0 +1,175 @@
+<div class="box-body">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" *ngIf="event.id">
+      {{ eventTypes[event.type] }}
+      <span class="pull-left margin-r-5 label" [ngClass]="event.labelClass()" *ngIf="visible.status">{{event.textStatus()}}</span>
+    </h4>
+    <div class="btn-group" *ngIf="!event.id">
+      <button class="btn btn-light btn-sm"
+              type="button"
+              *ngFor="let key of availableTypes"
+              [class.active]="event.type == key"
+              (click)="setType(key)"
+              [disabled]="!canCreateType(key)"
+              appTrack="event_{{key}}">
+        {{ eventTypes[key] }}
+      </button>
+    </div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" (ngSubmit)="save()">
+      <div class="alert alert-danger" *ngIf="hasError('message')">{{ textError('message') }}</div>
+      <div class="form-group" *ngIf="visible.title" [ngClass]="{'has-error': hasError('title')}">
+        <label class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-10">
+          <input type="text"
+                 name="title"
+                 class="form-control"
+                 placeholder="Add title"
+                 [(ngModel)]="event.title"
+                 #focusInput
+                 (focus)="changeFocus()"
+                 required>
+          <span class="help-block" *ngIf="hasError('title')">{{ textError('title') }}</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><i class="fa fa-calendar"></i></label>
+        <div class="col-sm-5">
+          <div [ngClass]="{'has-error': hasError('started_at'), 'input-group': visible.time && !event.allDay }">
+            <input class="form-control"
+                   name="start"
+                   bsDatepicker
+                   [bsConfig]="bsConfig"
+                   [(ngModel)]="event.start"
+                   [bsValue]="event.start"
+                   autocomplete="off">
+            <span class="input-group-btn">
+              <select class="form-control timepicker" [(ngModel)]="startTime"  name="startTime" *ngIf="visible.time && !event.allDay">
+                <option *ngFor="let time of timeItems" [value]="time.value">{{ time.key }}</option>
+              </select>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div [ngClass]="{'has-error': hasError('ended_at'), 'input-group': visible.time && !event.allDay }">
+            <span class="input-group-btn">
+              <select class="form-control timepicker" [(ngModel)]="endTime" name="endTime" *ngIf="visible.time && !event.allDay">
+                <option *ngFor="let time of timeItems" [value]="time.value">{{ time.key }}</option>
+              </select>
+            </span>
+            <input class="form-control"
+                   name="end"
+                   bsDatepicker
+                   [minDate]="event.start"
+                   [bsConfig]="bsConfig"
+                   [(ngModel)]="event.end"
+                   [bsValue]="event.end"
+                   autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10 text-danger" *ngIf="hasError('started_at')">Start: {{ textError('started_at') }}</div>
+      <div class="col-sm-offset-2 col-sm-10 text-danger" *ngIf="hasError('ended_at')">End: {{ textError('ended_at') }}</div>
+
+      <div class="form-group" *ngIf="visible.allDay">
+        <div class="col-sm-offset-2 col-sm-10 checkbox">
+          <label>
+            <input type="checkbox"
+                   name="allDay"
+                   [(ngModel)]="event.allDay">
+            All day?
+          </label>
+        </div>
+
+      </div>
+
+      <div class="form-group" *ngIf="visibleProjects && visible.project" [ngClass]="{'has-error': hasError('project')}">
+        <label class="col-sm-2 control-label">Project</label>
+        <ng-select [items]="projects | async"
+                   bindLabel="title"
+                   bindValue="id"
+                   class="col-sm-10 dark-select"
+                   name="projectId"
+                   [addTag]="true"
+                   [multiple]="false"
+                   [hideSelected]="false"
+                   [typeahead]="searchProjectInput"
+                   [(ngModel)]="event.projectId">
+        </ng-select>
+
+        <span class="help-block">{{ textError('project') }}</span>
+      </div>
+
+      <div class="form-group" *ngIf="visibleUsers && visible.user" [ngClass]="{'has-error': hasError('user')}">
+        <label class="col-sm-2 control-label">User</label>
+        <app-user-select-async class="col-sm-10"
+                               [receivedUsers]="event.userId"
+                               (selectUsers)="onSelectUser($event)"
+                               [isCloseOnSelect]="true"
+                               [isMultiple]="false"
+                               bindValue="id">
+        </app-user-select-async>
+        <span class="help-block">{{ textError('user') }}</span>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error': hasError('description')}">
+        <label class="col-sm-2 control-label">
+          {{ visible.description }}
+        </label>
+        <div class="col-sm-10">
+          <textarea name="description"
+                    [(ngModel)]="event.description"
+                    autosize
+                    class="form-control"
+                    placeholder="Description"
+                    required>
+          </textarea>
+          <span class="help-block" *ngIf="hasError('description')">{{ textError('description') }}</span>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="visible.tag" [ngClass]="{'has-error': hasError('event_tag')}">
+        <label class="col-sm-2 control-label">Tag</label>
+        <div class="col-sm-10">
+          <select [(ngModel)]="event.eventTagId"
+                  name="tagId"
+                  class="form-control">
+            <option *ngFor="let tag of tags" [value]="tag.id">
+              {{ tag.name }}
+            </option>
+          </select>
+          <span class="help-block" *ngIf="hasError('event_tag')">{{ textError('event_tag') }}</span>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <div class="text-center" *ngIf="busy">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+    <ng-container *ngIf="!busy">
+      <button *ngIf="event.id"
+              type="button"
+              class="btn btn-danger pull-left"
+              (click)="deleteEvent()">
+        <i class="fa fa-trash"></i>
+        Remove
+      </button>
+      <button *ngIf="event.eventTagId" class="btn btn-default" type="button" (click)="event.eventTagId = null">Remove tag</button>
+      <button class="btn btn-primary" type="button" (click)="save()">{{ event.id ? 'Update' : 'Create' }}</button>
+
+      <ng-container *appHasPermissions="'calendar:vacation'">
+        <ng-container *ngIf="visible.approving && event.id">
+          <button class="btn btn-success" type="button" (click)="approve()">Approve</button>
+          <button class="btn btn-danger" type="button" (click)="disapprove()">Disapprove</button>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

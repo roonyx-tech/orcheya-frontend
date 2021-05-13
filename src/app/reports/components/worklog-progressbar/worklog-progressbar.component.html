@@ -1,0 +1,14 @@
+<div class="cell" [ngClass]="getClass()" *ngIf="worked - plan !== 0; else empty ">
+  <div class="time">
+    <span class="worked">{{ worked - plan | duration }}</span>
+    <span class="plan"> {{ plan | duration }}</span>
+  </div>
+  <div class="progress">
+    <progressbar style="margin-top: 0" [value]="stacked" [max]="maximum"></progressbar>
+  </div>
+</div>
+<ng-template #empty>
+  <div class="cell text-center text-muted">
+    Day off
+  </div>
+</ng-template>

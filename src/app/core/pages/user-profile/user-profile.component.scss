@@ -1,0 +1,207 @@
+@import '_variables';
+
+section {
+  color: $gray-900;
+}
+
+a {
+  color: $blue-500;
+
+  &.btn {
+    color: $white;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    outline: none;
+    text-decoration: none;
+    color: $blue-700;
+  }
+}
+
+.set {
+  width: inherit;
+}
+
+.table-btn-wrapper {
+  width: 100%;
+  padding: 10px;
+
+  button {
+    font-weight: 700;
+  }
+}
+
+.box {
+  background: $white;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(55,71,79,0.5);
+
+  .box-header {
+    color: $gray-900;
+  }
+
+  .with-border {
+    border-bottom: 1px $gray-100 solid;
+  }
+}
+
+.box-primary {
+  border-top-color: $gray-100;
+}
+
+.box-achievement {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  .achievement {
+    display: flex;
+    margin-right: 10px;
+    padding: 0 5px 10px 10px;
+      &-info {
+      display: flex;
+      justify-content: space-between;
+      height: 45px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid $gray-100;
+        &-title {
+          height: 45px;
+          width: 60%;
+          h1 {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px 5px 2px 5px;
+          }
+          span {
+            font-size: 12px;
+            margin-left: 5px;
+          }
+        }
+    }
+    img {
+      border-radius: 5px;
+      width: 45px;
+      height: 45px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.achievement-kind-auto {
+  font-size : 15px;
+  margin : 10px 10px 0 0;
+}
+
+.achievement-kind-manual {
+  font-size : 11px;
+  margin : 5px;
+  text-align: end
+}
+
+.integration-switcher {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  width: 690px;
+
+  :host ::ng-deep .btn-group {
+    .btn-outline:not(.active) {
+      &:active,
+      &:focus {
+        background-color: $white !important;
+      }
+    }
+  }
+}
+
+.cv {
+  border-top: 1px solid $gray-100;
+  background-color: $gray-25;
+  p {
+    background-color: $white;
+    border-bottom: 1px solid $gray-100;
+    padding: 10px;
+    word-wrap: break-word;
+  }
+}
+
+.box-toggle {
+  &-close, &-open {
+    transition: transform .5s ease;
+  }
+  &-close {
+    transform: rotate(90deg);
+  }
+  &-open {
+    transform: rotate(0deg);
+  }
+}
+
+.user-link {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: calc(15vw - 20px);
+  display: block;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: $gray-25;
+
+  .table-striped {
+    border-color: $gray-100;
+  }
+}
+
+// .btn-primary {
+//   background: $blue-400;
+//   border: 1px $blue-500 solid;
+//   color: $white;
+
+//   &:hover {
+//     background: $blue-500;
+//     border: 1px $blue-700 solid;
+//   }
+
+//   &:focus {
+//     background: $blue-600;
+//     border: 1px $blue-700 solid;
+//   }
+// }
+
+.btn-link {
+  color: $blue-500;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $blue-700;
+  }
+}
+
+.discord-icon {
+  width: 15px;
+  height: 15px;
+}
+
+// .btn-outline {
+//   border: 1px $gray-100 solid;
+//   border-radius: 4px;
+//   color: $gray-900;
+// }
+
+@media only screen and (max-width: 800px) {
+  .integration-switcher {
+    width: auto;
+  }
+
+  .user-link {
+    width: calc(50vw - 20px);
+  }
+}

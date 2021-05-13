@@ -1,0 +1,36 @@
+@import 'variables';
+
+.sections-list {
+  display: grid;
+  grid-template-columns: repeat( auto-fit, 450px );
+  justify-content: space-around;
+  list-style: none;
+
+  & > li {
+    background: $light-text-color;
+    margin: 15px;
+    padding: 15px 0;
+    text-align: center;
+    transition: transform .05s ease-in;
+    width: auto;
+
+    .section-img {
+      background-position: center;
+      background-size: cover;
+      height: 300px;
+      margin: 0 15px 15px 15px;
+      max-width: 400px;
+    }
+  }
+
+  li:hover {
+    transform: scale(1.1);
+  }
+
+  .section-name {
+    color: $primary-text-color;
+    font-size: 20px;
+    font-weight: 600;
+    word-break: break-word;
+  }
+}

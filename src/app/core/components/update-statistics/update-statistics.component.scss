@@ -1,0 +1,32 @@
+@import 'variables';
+
+.wrap {
+  margin: 25px 45px;
+
+  > * {
+    margin-bottom: 25px;
+  }
+
+  .chart {
+    display: flex;
+    flex-direction: column;
+    background: $white;
+    &-title {
+      text-align: center;
+      margin-top: 10px;
+      span {
+        color: $bcg-for-panel;
+        font-size: 18px;
+      }
+      p {
+        color: $light-bg-color;
+        font-size: 12px;
+        margin: 0;
+      }
+    }
+    &-graph {
+      height: 350px;
+      ::ng-deep.textDataLabel { transform: none; }
+    }
+  }
+}

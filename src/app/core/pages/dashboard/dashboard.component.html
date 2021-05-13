@@ -1,0 +1,37 @@
+<section class="content-header">
+  <h1>Home</h1>
+  <ol class="breadcrumb">
+    <li><a [routerLink]="['/']">Home</a></li>
+  </ol>
+</section>
+
+<br>
+
+<section class="wrap">
+  <div class="filter-controls">
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+      </div>
+      <app-period-date-picker [(ngModel)]="dates" (ngModelChange)="beforeGetServiceLoad()" [periodUnit]="step"></app-period-date-picker>
+    </div>
+
+    <div class="calendar-control">
+      <div class="c-label">
+        Period:
+      </div>
+      <app-date-range [count]="count"
+                      [kind]="kind"
+                      (changeDates)="changeDates($event)"></app-date-range>
+    </div>
+    <div class="calendar-control">
+      <div class="c-label">
+        Step:
+      </div>
+      <app-date-step [step]="step"
+                     (changeStep)="changeStep($event)"></app-date-step>
+    </div>
+  </div>
+</section>
+
+<app-chart-service [chartPie]="true"></app-chart-service>

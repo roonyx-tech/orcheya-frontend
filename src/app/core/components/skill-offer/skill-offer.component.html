@@ -1,0 +1,37 @@
+<form class="offer-skill"
+      [formGroup]="form">
+  <div *ngIf="offeredSkill" class="alert alert-success alert-dismissable show" role="alert">
+    Your skill <strong>{{ offeredSkill }}</strong> has been offered.
+  </div>
+  <p class="title">Skill is not found. Do you want to offer?</p>
+  <div class="field">
+    <input type="text"
+           class="form-control"
+           placeholder="Enter skill name (Ruby on Rails)"
+           name="title"
+           formControlName="title">
+   <span class="help-block">{{ textError('title') }}</span>
+  </div>
+  <div class="field">
+    <select type="text"
+            class="form-control"
+            name="difficulty_level_id"
+            formControlName="difficultyLevelId">
+      <option *ngFor="let difficulty of difficultyLevels"
+              [value]="difficulty.id">
+        {{ difficulty.title }}
+      </option>
+    </select>
+    <span class="help-block">{{ textError('difficultyLevelId') }}</span>
+  </div>
+  <textarea class="form-control textarea"
+            placeholder="Enter variants of the skill name (Ror, rails)"
+            name="variants"
+            formControlName="variants">
+  </textarea>
+  <input class="btn btn-primary btn-offer"
+         [disabled]="form.invalid"
+         type="submit"
+         value="Offer"
+         (click)="onSubmit()">
+</form>

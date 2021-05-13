@@ -1,0 +1,113 @@
+@import '../../../../styles/variables';
+
+.form-group {
+  [type="radio"]:not(:first-child) {
+    margin-left: 15px;
+  }
+}
+
+.clearfix {
+  cursor: default;
+}
+
+.disconnect {
+  ::ng-deep .panel {
+    background-color: $second-bg-color;
+    border-radius: 4px;
+    box-shadow: none;
+  }
+
+  ::ng-deep .panel-default {
+    background-color: $primary-border-color;
+    border-radius: 4px;
+  }
+
+  ::ng-deep .panel-default > .panel-heading {
+    color: $gray-900;
+    background-color: $gray-50;
+    border-color: $gray-100;
+
+    & + .panel-collapse > .panel-body {
+      background: $gray-25;
+    }
+  }
+}
+
+.connect {
+  ::ng-deep .panel {
+    background-color: $green-200;
+    border-radius: 4px;
+    box-shadow: none;
+  }
+
+  ::ng-deep .panel-default {
+    background-color: $green-100;
+    border-radius: 4px;
+  }
+
+  ::ng-deep .panel-default > .panel-heading {
+    color: $gray-900;
+    background-color: $green-100;
+    border-color: $gray-200;
+
+    & + .panel-collapse > .panel-body {
+      background: $gray-25;
+    }
+  }
+}
+
+:host ::ng-deep accordion .panel-heading {
+  padding: 0 15px;
+}
+
+.integrations {
+  color: $gray-900;
+  background: $white;
+
+  .integration-name {
+    display: inline-block;
+    margin-top: 15px;
+
+    .ml {
+      margin-left: 5px;
+    }
+  }
+
+  .discord-icon {
+    height: 18px;
+    width: 18px;
+  }
+
+  .btn-wrapper {
+    display: inline-block;
+    margin: 10px;
+    .btn {
+      background-color: transparent;
+      font-weight: bold;
+      color: $gray-900;
+
+      &:hover {
+        color: $blue-500;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .switch-wrapper {
+    float: right;
+    width: 190px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+hr {
+  border-color: $gray-100;
+}
+
+.box-header {
+  color: $gray-900;
+}

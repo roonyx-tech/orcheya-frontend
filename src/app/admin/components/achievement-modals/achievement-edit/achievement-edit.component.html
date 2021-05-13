@@ -1,0 +1,186 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    {{ (achievement?.title ? 'Editing' : 'Adding') + ' achievement' }}
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" class="form-horizontal" autocomplete="off">
+    <div class="box-body">
+      <div class="form-group row">
+        <div [hidden]="!!achievement?.kind" class="type-radio col-sm-10 col-sm-offset-2">
+          <input type="radio"
+                 id="auto-type"
+                 value="auto"
+                 class="type-radio-control"
+                 formControlName="kind">
+          <label for="auto-type" class="type-radio-label">Auto</label>
+          <input type="radio"
+                 id="manual-type"
+                 value="manual"
+                 class="type-radio-control"
+                 formControlName="kind">
+          <label for="manual-type" class="type-radio-label">Manual</label>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': hasError(form, 'title') }">
+        <div class="row">
+          <label for="title" class="col-sm-2 control-label">Title*</label>
+          <div class="col-sm-10">
+            <input type="text" id="title" class="form-control" placeholder="Title..." formControlName="title">
+            <span class="help-block">{{ hasError(form, 'title') ? textError(form, 'title') : '' }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-error': hasError(form, 'image') }">
+        <div class="row">
+          <label for="image" class="col-sm-2 control-label">Image*</label>
+          <div class="col-sm-10">
+            <input type="file" id="image" class="form-control" placeholder="Image..." formControlName="image" width="50" (change)="handleFileInput($event.target.files)" accept="image/*">
+            <p class="img-notifier" *ngIf="achievement?.image">*The achievement has an image (you can choose a new one).</p>
+            <span class="help-block">{{ hasError(form, 'image') ? textError(form, 'image') : '' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto achievement -->
+
+      <div *ngIf="form.get('kind').value === 'auto'; else manualBlock">
+        <div class="form-group" [ngClass]="{ 'has-error': hasError(form, 'endpoint') }">
+          <div class="row">
+            <label for="endpoint-id" class="col-sm-2 control-label">
+              Endpoint*
+            </label>
+            <div class="col-sm-10">
+              <select type="text" class="form-control" id="endpoint-id" formControlName="endpoint">
+                <option class="endpoint" *ngFor="let endpoint of endpoints$ | async" [value]="endpoint.value">
+                  {{ endpoint.title | titlecase }}
+                </option>
+              </select>
+              <span class="help-block">{{ hasError(form, 'endpoint') ? textError(form, 'endpoint') : '' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': hasError(form, 'roles') }">
+          <div class="row">
+            <label for="role-id" class="col-sm-2 control-label">
+              Roles*
+            </label>
+            <div class="col-sm-10">
+              <ng-select [items]="roles"
+                         bindLabel="name"
+                         bindValue="id"
+                         class="dark-select custom"
+                         [multiple]="true"
+                         [closeOnSelect]="false"
+                         [hideSelected]="true"
+                         formControlName="roles">
+              </ng-select>
+              <button class="btn btn-primary select-all" (click)="onSelectAll('roles')">Select all</button>
+              <span class="help-block">{{ hasError(form, 'roles') ? textError(form, 'roles') : '' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngFor="let level of levelsBlock.controls; let i = index" class="form-group margin-bottom-none" formArrayName="levels">
+          <div class="tier-line row">
+            <label class="col-sm-2 control-label">#{{ i + 1}}</label>
+            <div class="col-sm-10" [formGroupName]="i">
+
+              <div class="row">
+                <div class="col-sm-10 col-xs-{{levelsBlock.controls.length > 1 ? 9 : 12}} fraction"
+                     [ngClass]="{ 'has-error': hasError(level, 'name') }">
+                  <input type="text" class="form-control" formControlName="name" placeholder="Name...">
+                  <span class="help-block">{{ hasError(level, 'name') ? textError(level, 'name') : '' }}</span>
+                </div>
+
+                <div *ngIf="displayDeleteBtn(i, levelsBlock.controls.length)"
+                     class="col-sm-2 col-xs-{{levelsBlock.controls.length > 1 ? 3 : ''}} fraction text-right">
+                  <button class="btn btn-danger" (click)="deleteLevel(i, level.value)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-3 col-xs-5 fraction" [ngClass]="{ 'has-error': hasError(level, 'from') }">
+                  <input type="number" class="form-control" placeholder="From..." formControlName="from">
+                  <span class="help-block">{{ hasError(level, 'from') ? textError(level, 'from') : '' }}</span>
+                </div>
+
+                <span class="col-sm-1 col-xs-2">&#8212;</span>
+
+                <div class="col-sm-3 col-xs-5 fraction" [ngClass]="{ 'has-error': hasError(level, 'to') }">
+                  <input type="number" class="form-control" placeholder="To..." formControlName="to">
+                  <span class="help-block">{{ hasError(level, 'to') ? textError(level, 'to') : '' }}</span>
+                </div>
+
+                <div [style.padding]="'0'" class="col-sm-10 col-xs-12">
+                  <div class="col-sm-4 col-xs-12 fraction" [ngClass]="{ 'has-error': hasError(level, 'color') }">
+                    <input type="text" class="form-control" placeholder="First color.." formControlName="color">
+                    <span class="help-block">{{ hasError(level, 'color') ? textError(level, 'color') : '' }}</span>
+                  </div>
+  
+                  <div class="col-sm-4 col-xs-12 fraction" [ngClass]="{ 'has-error': hasError(level, 'secondColor') }">
+                    <input type="text" class="form-control" placeholder="Second color.." formControlName="secondColor">
+                    <span class="help-block">{{ hasError(level, 'secondColor') ? textError(level, 'secondColor') : '' }}</span>
+                  </div>
+  
+                  <div class="col-sm-4 col-xs-12 fraction" [ngClass]="{ 'has-error': hasError(level, 'thirdColor') }">
+                    <input type="text" class="form-control" placeholder="Third color.." formControlName="thirdColor">
+                    <span class="help-block">{{ hasError(level, 'thirdColor') ? textError(level, 'thirdColor') : '' }}</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <hr *ngIf="levelsBlock.controls.length > 1 && i !== levelsBlock.controls.length - 1" />
+        </div>
+
+        <div class="row">
+          <div class="col-sm-offset-2">
+            <button *ngIf="levelsBlock.controls.length < 10" class="btn btn-primary" (click)="addLevelGroup()">Add level</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manual achievement -->
+
+      <ng-template #manualBlock>
+        <div class="form-group" [ngClass]="{ 'has-error': hasError(form, 'users') }">
+          <div class="row">
+            <label for="users-id" class="col-sm-2 control-label">
+              Users*
+            </label>
+            <div class="col-sm-10">
+              <ng-select [items]="users"
+                         bindLabel="fullName"
+                         bindValue="id"
+                         id="users-id"
+                         class="dark-select custom"
+                         [multiple]="true"
+                         [closeOnSelect]="false"
+                         [hideSelected]="true"
+                         formControlName="users">
+              </ng-select>
+              <button class="btn btn-primary select-all" (click)="onSelectAll('users')">Select all</button>
+              <span class="help-block">{{ hasError(form, 'users') ? textError(form, 'users') : '' }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" [disabled]="form.invalid" (click)="submit()">Submit</button>
+</div>

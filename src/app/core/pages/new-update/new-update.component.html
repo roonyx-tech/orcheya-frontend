@@ -1,0 +1,106 @@
+<section class="content">
+  <h1>Update {{ update.date | date }}</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="box box-primary">
+        <div class="box-body" *ngIf="isAllowedToSendUpdate; else forbiddenToWriteUpdate">
+          <form (ngSubmit)="sendUpdate()">
+            <div class="form-group">
+              <label for="update-made">
+                Your plan was<small  *ngIf="previousUpdate">({{ previousUpdate.date | date }})</small>:
+              </label>
+              <ul>
+                <li *ngFor="let task of promisedList">{{ task }}</li>
+                <li *ngIf="promisedList && promisedList.length === 0" class="text-muted">Empty</li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="update-made">
+                Today, you worked on:
+              </label>
+              <ul>
+                <li  *ngIf="doneTodayTasks && doneTodayTasks.length === 0" class="text-muted">
+                  You haven't done today anything through tracker
+                </li>
+                <li *ngFor="let task of doneTodayTasks">
+                  <ng-container *ngIf="task.taskUrl; else noUrl">
+                    <a href="{{ task.taskUrl }}">
+                      {{ task.title }}
+                    </a>
+                  </ng-container>
+                  <ng-template #noUrl>
+                    {{ task.title }}
+                  </ng-template>
+                </li>
+              </ul>
+            </div>
+            <div class="form-group">
+              <label for="update-made">
+                What have you done?
+              </label>
+              <textarea
+                autosize
+                type="text"
+                class="form-control"
+                placeholder="Finished tasks"
+                id="update-made"
+                name="update-made"
+                required
+                [(ngModel)]="update.made">
+              </textarea>
+            </div>
+            <div class="form-group">
+              <label for="update-planning">
+                What are you going to do tomorrow?
+              </label>
+              <textarea
+                autosize
+                type="text"
+                class="form-control"
+                placeholder="Tasks you gonna do"
+                id="update-planning"
+                name="update-planning"
+                required
+                [(ngModel)]="update.planning">
+              </textarea>
+            </div>
+            <div class="form-group">
+              <label for="update-issues">
+                Do you have any problems?
+              </label>
+              <textarea
+                autosize
+                type="text"
+                class="form-control"
+                placeholder="Problems"
+                id="update-issues"
+                name="update-issues"
+                required
+                [(ngModel)]="update.issues">
+              </textarea>
+            </div>
+            <div class="row">
+              <div class="col-xs-8"></div>
+              <div class="col-xs-4">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                  [disabled]="!update.issues || !update.planning || !update.made">
+                  Send
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <ng-template class="box-body" #forbiddenToWriteUpdate>
+        <p class="old-update-message">
+          Sorry, you can't write an update on this date
+        </p>
+      </ng-template>
+    </div>
+    <div class="col-md-4">
+      <app-user-box-badge [user]="currentUser" [isCurrentUser]="true"></app-user-box-badge>
+    </div>
+  </div>
+</section>

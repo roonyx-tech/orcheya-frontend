@@ -1,0 +1,17 @@
+<div class="calendar-wrapper">
+  <full-calendar
+    #calendar
+    defaultView="dayGridMonth"
+    [firstDay]="1"
+    [editable]="true"
+    [header]="calendarHeader"
+    [plugins]="calendarPlugins"
+    [eventSources]="eventSources"
+    (dateClick)="dateClick($event)"
+    (eventClick)="eventClick($event)"
+    (eventRender)="eventRender($event)"
+    (eventDrop)="eventUpdated($event)"
+    (eventResize)="eventUpdated($event)"
+    (datesRender)="filter()">
+  </full-calendar>
+</div>

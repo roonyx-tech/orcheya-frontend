@@ -1,0 +1,73 @@
+@import '_variables';
+
+.wrap {
+  padding: 20px 30px;
+  background-color: $white;
+  margin: 15px;
+}
+
+.filter-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr max-content  max-content max-content max-content max-content;
+  grid-gap: 10px;
+  margin-bottom: 15px;
+  .btn {
+    height: fit-content;
+    &-default {
+      color: $gray-900;
+      background-color: $white;
+      border-color: $gray-100;
+      &:hover {
+        color: $white;
+        background-color: $blue-600;
+      }
+    }
+    &-active {
+      color: $white;
+      background-color: $blue-500;
+      border-color: $blue-600;
+    }
+  }
+}
+
+.shadow {
+  color: rgba(52, 52, 52, 0.51)
+}
+
+.fa-fw {
+  cursor: pointer;
+  opacity: .4;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.future {
+  background-color: $gray-50;
+}
+
+
+.horizontal {
+  overflow-x: auto;
+}
+
+.popover {
+  background-color: #2d2d2d;
+  border-radius: 0;
+}
+
+.popover.bottom > .arrow:after {
+  border-bottom-color: #2d2d2d;
+}
+
+.checkbox label {
+  margin-right: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+
+  .filter-controls {
+    grid-template-columns: 1fr;
+  }
+}

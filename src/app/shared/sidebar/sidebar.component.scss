@@ -1,0 +1,44 @@
+.active > .treeview-menu {
+  display: none;
+}
+
+.main-sidebar {
+  position: fixed;
+  transition: transform .3s ease-in-out,
+              width .3s ease-in-out,
+              -webkit-transform .3s ease-in-out,
+              padding-top .1s ease-in-out;
+  box-shadow: 1px 0px 5px 0px rgba(55,71,79,0.15);
+
+  &.scrolled {
+    padding-top: 0;
+    transition: transform .3s ease-in-out,
+                width .3s ease-in-out,
+                -webkit-transform .3s ease-in-out,
+                padding-top .5s ease-in-out;
+  }
+
+  .treeview {
+    &.menu-open {
+      .treeview-menu {
+        display: block;
+      }
+    }
+  }
+
+  .sidebar-menu {
+    .faq-item {
+      bottom: 0;
+      position: absolute;
+      width: 100%;
+    }
+  }
+}
+
+.sidebar-menu > li:hover {
+  > a > .pull-right-container {
+    left: 160px;
+  }
+}
+
+.fa-home { font-size: 17px; }

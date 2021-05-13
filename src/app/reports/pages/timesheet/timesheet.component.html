@@ -1,0 +1,115 @@
+<section class="content-header">
+  <h1>
+    Timesheet
+  </h1>
+  <ol class="breadcrumb">
+    <li><a [routerLink]="['/']">Home</a></li>
+    <li class="active">Service load</li>
+  </ol>
+</section>
+<section class="wrap">
+  <div class="filter-controls">
+    <div class="input-group">
+      <app-user-select-async [receivedUsers]="filter && filter.users"
+                             (selectUsers)="onUserChange($event)"
+                             [isCloseOnSelect]="false"
+                             [isMultiple]="true">
+      </app-user-select-async>
+    </div>
+    <div class="input-group">
+      <ng-select bindLabel="name"
+                 placeholder="Select roles"
+                 notFoundText="Roles not found"
+                 [items]="roles"
+                 class="dark-select"
+                 [multiple]="true"
+                 [typeahead]="typeahead"
+                 [closeOnSelect]="false"
+                 [hideSelected]="true"
+                 [(ngModel)]="filter.roles"
+                 (change)="filterChanged()">
+      </ng-select>
+    </div>
+    <button class="btn btn-default" [ngClass]="{'btn-active': paid}" (click)="togglePaid()" type="button">Paid only</button>
+    <app-period-date-picker [(ngModel)]="filter.dates"
+                            (ngModelChange)="filterChanged()"
+                            [periodUnit]="groupByWeek ? 'month' : 'week'">
+    </app-period-date-picker>
+    <button type="button" class="btn btn-primary" (click)="setPrevious()">
+      Previous
+    </button>
+    <button type="button" class="btn btn-primary" (click)="setCurrent()">
+      Current
+    </button>
+    <div class="btn-group" btnRadioGroup [(ngModel)]="groupByWeek" (ngModelChange)="groupingChanged()">
+      <label class="btn btn-primary" [btnRadio]="false" tabindex="0" role="button">Week view</label>
+      <label class="btn btn-primary" [btnRadio]="true" tabindex="0" role="button">Month view</label>
+    </div>
+  </div>
+
+  <div *ngIf="timesheetRows" class="box box-primary horizontal">
+    <table class="table table-bordered table-hover dataTable" role="grid">
+      <thead>
+        <tr>
+          <th>Name
+            <i (click)="sortByColumn('surname')"
+               class="fa fa-fw"
+               [class.fa-sort-alpha-asc]="isSortingColumn('surname', 'asc')"
+               [class.fa-sort-alpha-desc]="isSortingColumn('surname', 'desc')"
+               [class.fa-sort]="!isSortingColumn('surname')"></i>
+          </th>
+          <th>Total
+            <i (click)="changeSortByCountTime()"
+               class="fa fa-fw"
+               [class.fa-sort-amount-asc]="isSortingColumn('countTime', 'asc')"
+               [class.fa-sort-amount-desc]="isSortingColumn('countTime', 'desc')"
+               [class.fa-sort]="!isSortingColumn('countTime')"></i>
+          </th>
+          <th *ngFor="let day of days"
+              class="text-center"
+              [class.future]="day.isAfter(today)">
+            {{ formatDate(day) }}
+            <i *ngIf="!day.isAfter(today)"
+               (click)="changeSortByDate(day)"
+               class="fa fa-fw"
+               [class.fa-sort-amount-asc]="isSortingColumn(day.toString(), 'asc')"
+               [class.fa-sort-amount-desc]="isSortingColumn(day.toString(), 'desc')"
+               [class.fa-sort]="!isSortingColumn(day.toString())"></i>
+          </th>
+        </tr>
+        <tr>
+          <th>{{ timesheetRows.length }} users selected</th>
+          <th class="no-padding">
+            <app-worklog-progressbar
+              [plan]="total('plan')"
+              [worked]="total(paid ? 'paid' : 'all')">
+            </app-worklog-progressbar>
+          </th>
+          <th *ngFor="let day of days" class="no-padding" [class.future]="day.isAfter(today)">
+            <app-worklog-progressbar
+              [plan]="unitTotal('plan', day)"
+              [worked]="unitTotal(paid ? 'paid' : 'all', day)">
+            </app-worklog-progressbar>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of timesheetRows; trackBy: trackBy">
+          <td>{{ row.surname }} {{ row.name }}</td>
+          <td class="no-padding">
+            <app-worklog-progressbar
+              [plan]="row.total('plan')"
+              [worked]="row.total(paid ? 'paid' : 'all')">
+            </app-worklog-progressbar>
+          </td>
+          <td *ngFor="let day of days" class="no-padding" [class.future]="day.isAfter(today)">
+            <app-worklog-progressbar
+              [plan]="row.unitTotal('plan', day, timeUnit)"
+              [worked]="row.unitTotal(paid ? 'paid' : 'all', day, timeUnit)">
+            </app-worklog-progressbar>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

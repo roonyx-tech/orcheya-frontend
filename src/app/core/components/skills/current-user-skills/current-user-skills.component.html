@@ -1,0 +1,115 @@
+<form class="skills-list"
+      #userSkillsList="ngForm"
+      (ngSubmit)="updateSkills(userSkillsList)">
+  <div class="language-skills">
+    <div class="title">
+      Language Skills
+    </div>
+    <div class="skill-row">
+      <p class="title">English</p>
+      <span>
+        <div class="difficulty" *ngIf="canUpdateLanguageLevel(); else showDisabledSkill">
+          <ng-container *ngFor="let level of englishLevelsAmount">
+            <input type="radio"
+                   [id]="'englishLevel' + level"
+                   [value]="level + 1"/>
+            <label [for]="'englishLevel' + level"
+                   [ngClass]="{'current-level':
+                                 checkLevel(user.englishLevel, level)}"
+                   [tooltip]="getLanguageLevelTooltip(level)"
+                   (click)="updateEnglishLevel(level + 1)">
+            </label>
+          </ng-container>
+        </div>
+        <ng-template #showDisabledSkill>
+          <div class="difficulty">
+            <span *ngFor="let level of englishLevelsAmount"
+                  [ngClass]="{'current-level':
+                                checkLevel(user.englishLevel, level)}">
+            </span>
+          </div>
+        </ng-template>
+      </span>
+      <div class="update-date">
+        Last update: {{ user.lastEnglishUpdate | date:'mediumDate' }}
+      </div>
+    </div>
+  </div>
+  <div class="tech-skills">
+    <div class="title">
+      Tech Skills
+    </div>
+    <div class="skill-group">
+      <div *ngFor="let group of skillGroups | keyvalue; trackBy: trackByGroupFn">
+        <span class="title-group label label-default">{{ group.key }}</span>
+        <div class="skill-row" *ngFor="let userSkill of group.value; trackBy: trackBySkillFn">
+          <p class="title">{{ userSkill.skill.title }}</p>
+          <span>
+            <div class="difficulty">
+              <ng-container *ngFor="let level of getLevels(userSkill.skill)">
+                <input type="radio"
+                      [id]="'skill' + userSkill.skill.id + level"
+                      [value]="level + 1"
+                      [name]="'skill_' + userSkill.skill.id"
+                      ngModel/>
+
+                <label [for]="'skill' + userSkill.skill.id + level"
+                      [ngClass]="{'disapprove':
+                                    isDisapproved(userSkill.skillUpdate, level),
+                                  'expect':
+                                    isExpected(userSkill.skillUpdate, level),
+                                  'current-level':
+                                    checkLevel(userSkill.level, level)}"
+                      [tooltip]="getTechLevelTooltip(level)">
+                </label>
+              </ng-container>
+            </div>
+            <i class="fa fa-trash delete-icon"
+              (click)="removeSkill(userSkill.id)">
+            </i>
+            <div class="comment-wrapper"
+                *ngIf="isUpdate(userSkill.skillUpdate[0])">
+              <i class="fa fa-comment comment-icon"
+                *ngIf="showComment"
+                (click)="showComment(userSkill.skill.id)">
+              </i>
+              <app-skill-comments (closeComment)="showComment($event)"
+                                  [comment]="userSkill.skillUpdate[0].comment"
+                                  [approver]="userSkill.skillUpdate[0].approverId"
+                                  [ngClass]="{'comment-block': true,
+                                              'show': toggleComment === userSkill.skill.id}">
+              </app-skill-comments>
+            </div>
+          </span>
+          <div class="update-date">
+            Last update: {{ userSkill.skillUpdate[0].updatedAt | date:'mediumDate' }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title">Choose your skills</div>
+    <div class="skill-group">
+      <div *ngFor="let group of filteredSkillGroups | keyvalue; trackBy: trackByGroupFn">
+        <span class="title-group label label-default">{{ group.key }}</span>
+        <div class="skill-row" *ngFor="let skill of group.value; trackBy: trackBySkillFn">
+          <p class="title">{{ skill.title }}</p>
+          <span>
+            <div class="difficulty">
+              <ng-container *ngFor="let level of getLevels(skill)">
+                <input type="radio"
+                      [id]="'skill' + skill.id + level"
+                      [value]="level + 1"
+                      [name]="'skill_' + skill.id"
+                      ngModel/>
+                <label [for]="'skill' + skill.id + level" [tooltip]="getTechLevelTooltip(level)">
+                </label>
+              </ng-container>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <input class="btn btn-primary btn-save" type="submit" value="Save"/>
+    <input class="btn btn-default btn-save" type="reset" value="Reset"/>
+  </div>
+</form>

@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    Deleting {{ skillType.title }}
+  </h4>
+  <button type="button" 
+          class="close pull-right" 
+          aria-label="Close" 
+          (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <span>Select a new skill type:</span>
+  <select [(ngModel)]="newSkillTypeId"
+          class="form-control select2 select2-hidden-accessible">
+    <ng-container *ngFor="let type of enabledSkillTypes">
+      <option [value]="type.id">{{ type.title }}</option>
+    </ng-container>
+  </select>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-danger" 
+          [disabled]="!newSkillTypeId" 
+          (click)="deleteSkillType()">
+    Delete
+</button>
+</div>

@@ -1,0 +1,47 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Difficulty levels</h3>
+    <div class="box-tools">
+      <button type="button"
+              class="btn btn-primary btn-sm"
+              (click)="addDifficulty()">
+            Add difficulty
+      </button>
+    </div>
+  </div>
+  <div class="box-body table-responsive no-padding">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Value</th>
+          <th>ID</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let difficulty of difficultyLevels; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ difficulty.title }} </td>
+          <td>{{ difficulty.value }}</td>
+          <td>{{ difficulty.id }}</td>
+          <th class="no-padding text-right">
+            <a class="btn btn-primary btn-flat btn-width"
+               (click)="editDifficulty(difficulty)">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a class="btn btn-danger btn-flat btn-width"
+               (click)="delete(difficulty)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="difficultyLevels && difficultyLevels.length <= 0"
+          class="text-center">
+      No data to display
+    </div>
+  </div>
+</div>

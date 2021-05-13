@@ -1,0 +1,65 @@
+@import "variables";
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 7px;
+  margin-top: 15px;
+
+  img {
+    width: 150px;
+    height: 50px;
+  }
+}
+
+.btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10px auto 30px auto;
+  width: 90%;
+}
+
+.icon {
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  margin-bottom: 3px;
+}
+
+.box {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+  background-color: $white;
+  a { color: $blue-500; }
+
+  &-header {
+    padding: 10px 0;
+  }
+
+  .title {
+    font-weight: 300;
+    margin-top: 10px;
+  }
+}
+
+.btn-next {
+  margin-top: 15px;
+}
+
+@media (max-width: 767px) {
+  .box {
+    width: unset;
+  }
+}

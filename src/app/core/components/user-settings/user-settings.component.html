@@ -1,0 +1,75 @@
+<ng-content></ng-content>
+
+<hr>
+<div class="integrations">
+  <div class="box-header">
+    <h3 class="box-title">Integrations</h3>
+  </div>
+
+  <accordion>
+    <accordion-group [ngClass]="currentUser.slackConnected ? 'connect' : 'disconnect'" [isDisabled]="true" [isOpen]="isSlackOpen">
+      <div accordion-heading class="clearfix">
+        <span class="integration-name">
+          <i class="fa fa-slack"></i>
+          <b><span class="ml">Slack</span></b>
+        </span>
+        <app-slack-connect-button
+          class="pull-right"
+          [connected]="currentUser.slackConnected">
+        </app-slack-connect-button>
+        <div class="pull-right">
+          <div class="btn-wrapper">
+            <button class="btn" (click)="onSlackSettings()">
+              Settings
+            </button>
+          </div>
+        </div>
+      </div>
+      <span>Send me slack notifications by bot</span>
+      <div class="switch-wrapper">
+        <ui-switch size="small"
+                   [ngModel]="currentUser.notifyUpdate"
+                   (change)="onSlackChange($event)"></ui-switch>
+      </div>
+    </accordion-group>
+    <accordion-group [ngClass]="currentUser.discordConnected ? 'connect' : 'disconnect'" [isDisabled]="true" [isOpen]="isDiscordOpen">
+      <div accordion-heading class="clearfix">
+        <span class="integration-name">
+          <img class="discord-icon" src="/assets/social-icons/discord.svg" alt="discord">
+          <b><span class="ml">Discord</span></b>
+        </span>
+        <app-discord-connect-button
+          class="pull-right"
+          [connected]="currentUser.discordConnected">
+        </app-discord-connect-button>
+        <div class="pull-right">
+          <div class="btn-wrapper">
+            <button class="btn" (click)="onDiscordSettings()">
+              Settings
+            </button>
+          </div>
+        </div>
+      </div>
+      <span>Send me discord notifications by bot</span>
+      <div class="switch-wrapper">
+        <ui-switch
+          size="small"
+          [ngModel]="currentUser.discordNotifyUpdate"
+          (change)="onDiscordChange($event)"></ui-switch>
+      </div>
+    </accordion-group>
+    <accordion-group [ngClass]="currentUser.timedoctorConnected ? 'connect' : 'disconnect'" [isDisabled]="true">
+      <div accordion-heading class="clearfix">
+        <span class="integration-name">
+          <i class="fa fa-clock-o"></i>
+          <b><span class="ml">Timedoctor</span></b>
+        </span>
+        <app-timedoctor-connect-button
+          class="pull-right"
+          [connected]="currentUser.timedoctorConnected">
+        </app-timedoctor-connect-button>
+      </div>
+      This is just some content to illustrate fancy headings.
+    </accordion-group>
+  </accordion>
+</div>

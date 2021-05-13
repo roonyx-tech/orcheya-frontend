@@ -1,0 +1,29 @@
+@import 'variables';
+
+.wrap {
+  padding: 20px 30px;
+  .calendar-control {
+    ::ng-deep .btn-outline:focus {
+      box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+      color: $gray-900;
+    }
+  }
+}
+
+.calendar-control {
+  align-items: center;
+  display: flex;
+}
+
+.filter-controls {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
+}
+
+.best-user {
+  padding: 15px;
+  background-color: $white;
+  &-profile { display: flex; }
+  span { font-size: 16px; line-height: 19px;}
+}

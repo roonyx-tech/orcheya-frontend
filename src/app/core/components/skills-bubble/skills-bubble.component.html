@@ -1,0 +1,24 @@
+<div class="bubble" [ngClass]="{'english': userEnglish >= 0}">
+  <ng-container *ngIf="userEnglish >= 0; else skillsBlock">
+    <p class="title">English</p>
+    <div class="difficulty">
+      <ng-container *ngFor="let level of getLevels(englishLevelsAmount)">
+        <input type="radio" disabled>
+        <label [ngClass]="{'current-level': checkLevel(userEnglish, level)}"></label>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #skillsBlock>
+    <div *ngFor="let userSkill of userSkills">
+      <div *ngIf="userSkill.skill">
+        <p class="title">{{ userSkill.skill.title }}</p>
+        <div class="difficulty">
+          <ng-container *ngFor="let level of getLevels(userSkill.skill.difficultyLevel.value)">
+            <input type="radio" disabled/>
+            <label [ngClass]="{'current-level': checkLevel(userSkill.level, level)}"></label>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

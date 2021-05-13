@@ -1,0 +1,29 @@
+@import "variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 500px;
+  align-items: center;
+  .btn-primary {
+    background-color: $azure-500;
+    border-color: $azure-500;
+    color: $white;
+    border-radius: 4px;
+    &:hover {
+      background-color: $azure-700;
+    }
+  }
+
+  .active {
+    background-color: $azure-700;
+  }
+
+  .button-redirect {
+    margin-top: 10px;
+    button {
+      padding: 10px 30px;
+    }
+  }
+}

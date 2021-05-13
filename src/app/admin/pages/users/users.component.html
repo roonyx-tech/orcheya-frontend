@@ -1,0 +1,226 @@
+<section class="content-header manager-user">
+  <h1>Manage users</h1>
+  <a class="btn btn-primary" (click)="redirectInvite()">Add a new user</a>
+</section>
+
+<section class="content">
+  <div class="nav-tabs-custom">
+    <tabset>
+      <tab heading="Users" (selectTab)="ts.track('manage_users')">
+        <div class="tab-content">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th width="35px">#</th>
+                <th>Name
+                  <i (click)="sortByColumn('name',users)"
+                     class="fa fa-fw"
+                     [class.fa-sort-alpha-asc]="isSortingColumn('name', 'asc')"
+                     [class.fa-sort-alpha-desc]="isSortingColumn('name', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('name')"></i></th>
+                <th>Email
+                  <i (click)="sortByColumn('email',users)"
+                     class="fa fa-fw"
+                     [class.fa-sort-alpha-asc]="isSortingColumn('email', 'asc')"
+                     [class.fa-sort-alpha-desc]="isSortingColumn('email', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('email')"></i></th>
+                <th [style]="{'border': 'none'}">Integrations</th>
+                <th>Role
+                  <i (click)="sortByColumn('roles',users)"
+                     class="fa fa-fw"
+                     [class.fa-sort-alpha-asc]="isSortingColumn('roles', 'asc')"
+                     [class.fa-sort-alpha-desc]="isSortingColumn('roles', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('roles')"></i></th>
+                <th>Phone</th>
+                <th>Vacation days
+                  <i (click)="sortByColumn('vacationsAvailableDays',users)"
+                     class="fa fa-fw"
+                     [class.fa-sort-amount-asc]="isSortingColumn('vacationsAvailableDays', 'asc')"
+                     [class.fa-sort-amount-desc]="isSortingColumn('vacationsAvailableDays', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('vacationsAvailableDays')"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users | filter: 'invitationToken' : null : false; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <a class="link-name" [routerLink]="['/user-profile', user.id]">
+                    {{ user.name }} {{ user.surname }}
+                  </a>
+                </td>
+                <td>{{ user.email }}</td>
+                <td class="integrations">
+                  <div class="icon-container">
+                    <i class="fa fa-slack"
+                       [class.notifications-off]="!user.notifyUpdate"
+                       *ngIf="user.slackConnected"
+                       [tooltip]="user.notifyUpdate ? 'Slack' : 'Slack notifications - off'"></i>
+                  </div>
+                  <div class="icon-container">
+                    <i class="fa fa-clock-o" *ngIf="user.timedoctorConnected" tooltip="TimeDoctor"></i>
+                  </div>
+                  <div class="icon-container">
+                    <img class="discord-icon"
+                         [class.notifications-off]="!user.discordNotifyUpdate"
+                         src="/assets/social-icons/discord-logo-32.png"
+                         alt="Discord"
+                         [tooltip]="user.discordNotifyUpdate ? 'Discord' : 'Discord notifications - off'"
+                         *ngIf="user.discordConnected">
+                  </div>
+                </td>
+                <td>
+                  <ul class="item-list"
+                      *ngFor="let role of user.roles">
+                    <li>{{ role.name }}</li>
+                  </ul>
+                </td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.vacationsAvailableDays }}</td>
+                <th class="no-padding text-right">
+                  <a class="btn btn-primary btn-flat" (click)="editUser(user)" *appHasPermissions="['users:crud']">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  <a (click)="impersonateUser(user)" class="btn btn-success btn-flat" *appHasPermissions="['admin:super_admin']">
+                    <i class="fa fa-sign-in"></i>
+                  </a>
+                  <a (click)="removeUser(user)" class="btn btn-danger btn-flat" *appHasPermissions="['users:crud']">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </tab>
+      <tab heading="Deleted" (selectTab)="ts.track('manage_users_deleted')">
+        <div *ngIf="deletedUsers?.length; else unavailable" class="tab-content">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th width="35px">#</th>
+                <th>Name
+                  <i (click)="sortByColumn('name', deletedUsers)"
+                     class="fa fa-fw"
+                     [class.fa-sort-alpha-asc]="isSortingColumn('name', 'asc')"
+                     [class.fa-sort-alpha-desc]="isSortingColumn('name', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('name')"></i></th>
+                <th>Email
+                  <i (click)="sortByColumn('email', deletedUsers)"
+                     class="fa fa-fw"
+                     [class.fa-sort-alpha-asc]="isSortingColumn('email', 'asc')"
+                     [class.fa-sort-alpha-desc]="isSortingColumn('email', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('email')"></i></th>
+                <th>Hiring date
+                  <i (click)="sortByColumn('employmentAt', deletedUsers)"
+                     class="fa fa-fw"
+                     [class.fa-sort-amount-asc]="isSortingColumn('employmentAt', 'asc')"
+                     [class.fa-sort-amount-desc]="isSortingColumn('employmentAt', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('employmentAt')"></i></th>
+                <th>Deleted at
+                  <i (click)="sortByColumn('deletedAt', deletedUsers)"
+                     class="fa fa-fw"
+                     [class.fa-sort-amount-asc]="isSortingColumn('deletedAt', 'asc')"
+                     [class.fa-sort-amount-desc]="isSortingColumn('deletedAt', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('startedAt')"></i></th>
+                <th>Role
+                  <i (click)="sortByColumn('roles', deletedUsers)"
+                     class="fa fa-fw"
+                     [class.fa-sort-alpha-asc]="isSortingColumn('roles', 'asc')"
+                     [class.fa-sort-alpha-desc]="isSortingColumn('roles', 'desc')"
+                     [class.fa-sort]="!isSortingColumn('roles')"></i></th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of deletedUsers; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ user.name }} {{ user.surname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.employmentAt | humanizeDate }}</td>
+                <td>{{ user.deletedAt | humanizeDate }}</td>
+                <td>
+                  <ul class="item-list"
+                      *ngFor="let role of user.roles">
+                    <li>{{ role.name }}</li>
+                  </ul>
+                </td>
+                <td>{{ user.phone }}</td>
+                <th class="no-padding text-right">
+                  <a (click)="restoreUser(user)"
+                     *appHasPermissions="['users:crud']"
+                     class="btn btn-danger btn-flat"
+                     tooltip="Restore">
+                    <i class="fa fa-rotate-left"></i>
+                  </a>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </tab>
+      <tab heading="Invites" (selectTab)="ts.track('manage_users_invites')">
+        <div *ngIf="invitedUsers?.length; else unavailable" class="tab-content">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th [style]="{'width': '35px'}">#</th>
+              <th>First name
+                <i (click)="sortByColumn('name', invitedUsers)"
+                   class="fa fa-fw"
+                   [class.fa-sort-alpha-asc]="isSortingColumn('name', 'asc')"
+                   [class.fa-sort-alpha-desc]="isSortingColumn('name', 'desc')"
+                   [class.fa-sort]="!isSortingColumn('name')"></i></th>
+              <th>Last name
+                <i (click)="sortByColumn('surname',invitedUsers)"
+                   class="fa fa-fw"
+                   [class.fa-sort-alpha-asc]="isSortingColumn('surname', 'asc')"
+                   [class.fa-sort-alpha-desc]="isSortingColumn('surname', 'desc')"
+                   [class.fa-sort]="!isSortingColumn('surname')"></i></th>
+              <th>Email
+                <i (click)="sortByColumn('email',invitedUsers)"
+                   class="fa fa-fw"
+                   [class.fa-sort-alpha-asc]="isSortingColumn('email', 'asc')"
+                   [class.fa-sort-alpha-desc]="isSortingColumn('email', 'desc')"
+                   [class.fa-sort]="!isSortingColumn('email')"></i></th>
+              <th>Invite link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of invitedUsers; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.surname }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <div class="copy-invite">
+                  <span tooltip="Copy link invite"
+                        ngxClipboard
+                        (click)="notifier()"
+                        [cbContent]="user.invite">
+                  {{ user.invite }}
+                </span>
+                  <i class="fa fa-files-o"></i>
+                </div>
+              </td>
+              <th></th>
+              <th class="no-padding text-right">
+                <a (click)="redirectInvite(user.id)" class="btn btn-primary btn-flat">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a (click)="removeUserInvited(user)" class="btn btn-danger btn-flat">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </th>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </tab>
+    </tabset>
+    <ng-template #unavailable>
+      <div [style]="{'text-align': 'center'}">
+        <h3>No information available</h3>
+      </div>
+    </ng-template>
+  </div>
+</section>

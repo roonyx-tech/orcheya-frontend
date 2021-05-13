@@ -1,0 +1,22 @@
+{
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/system": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/images": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/uploads": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/rails_assets": {
+    "target": "http://localhost:3000",
+    "secure": false
+  }
+}

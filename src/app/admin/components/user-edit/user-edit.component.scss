@@ -1,0 +1,24 @@
+@import 'variables';
+
+.two-level {
+  padding-top: 0;
+}
+
+.input-error {
+  border-color: $red;
+}
+
+.error-message {
+  color: $red;
+}
+
+.custom-radio {
+  .custom-control-label {
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  .custom-control-input {
+    margin-right: 5px;
+  }
+}

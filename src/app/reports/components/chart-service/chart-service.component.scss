@@ -1,0 +1,35 @@
+@import "variables";
+
+.wrap {
+  padding: 20px 30px;
+}
+
+.chart {
+  display: flex;
+  justify-content: center;
+  height: 400px;
+  background-color: $white;
+}
+
+.loading {
+  align-items: center;
+  display: flex;
+  height: 400px;
+  justify-content: center;
+}
+
+.chart-result {
+  margin: 0 20px;
+  ul {
+    list-style: none;
+    padding: 0;
+    li { margin-bottom: 20px;}
+  }
+}
+
+.chart-pie {
+  display: flex;
+  background-color: $white;
+  justify-content: center;
+  width: 100%;
+}

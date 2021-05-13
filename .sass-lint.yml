@@ -1,0 +1,8 @@
+files:
+  include:
+    - 'src/**/*.s+(a|c)ss'
+  ignore:
+    - 'node_modules/**/*'
+    - 'src/adminlte.scss'
+rules:
+  single-line-per-selector: 0

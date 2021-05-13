@@ -1,0 +1,38 @@
+<div class="modal-header" *ngIf="role">
+  <h4 class="modal-title pull-left">
+    {{ role.name }}
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+
+<div class="modal-body">
+  <span>You can select new role (not necessary):</span>
+
+  <select [(ngModel)]="newRoleId"
+          class="form-control select2 select2-hidden-accessible"
+          style="width: 100%;"
+          tabindex="-1"
+          aria-hidden="true">
+    <ng-container *ngFor="let role of enabledRoles">
+      <option [value]="role.id">{{ role.name }}</option>
+    </ng-container>
+  </select>
+
+  <div *ngIf="errors">
+    <ng-container *ngFor="let error of errors">
+      <span>{{ error }}</span>
+    </ng-container>
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <a class="btn btn-danger"
+     (click)="delete()">
+    Delete
+  </a>
+</div>

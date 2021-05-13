@@ -1,0 +1,87 @@
+<div class="skills-list">
+  <div class="language-skills">
+    <div class="title">
+      Language Skills
+    </div>
+    <div class="skill-row">
+      <p class="title">English</p>
+      <span>
+        <div class="difficulty" *ngIf="canUpdateLanguageLevel(); else showDisabledSkill">
+          <ng-container *ngFor="let level of englishLevelsAmount">
+            <input type="radio"
+                   [id]="'englishLevel' + level"
+                   [value]="level + 1"/>
+            <label [for]="'englishLevel' + level"
+                   [ngClass]="{'current-level':
+                                 checkLevel(user.englishLevel, level)}"
+                   [tooltip]="getLanguageLevelTooltip(level)"
+                   (click)="updateEnglishLevel(level + 1)">
+            </label>
+          </ng-container>
+        </div>
+        <ng-template #showDisabledSkill>
+          <div class="difficulty">
+            <span *ngFor="let level of englishLevelsAmount"
+                  [tooltip]="getLanguageLevelTooltip(level)"
+                  [ngClass]="{'current-level':
+                                checkLevel(user.englishLevel, level)}">
+            </span>
+          </div>
+        </ng-template>
+      </span>
+      <div class="update-date" *ngIf="user.lastEnglishUpdate">
+        Last update: {{ user.lastEnglishUpdate | date:'mediumDate' }}
+      </div>
+    </div>
+  </div>
+  <div class="tech-skills">
+    <div class="title">
+      Tech Skills
+    </div>
+    <div class="skill-group">
+      <div *ngFor="let group of skillGroups | keyvalue; trackBy: trackByGroupFn">
+        <span class="title-group label label-default">{{ group.key }}</span>
+        <div class="visit-skill-row" *ngFor="let userSkill of group.value; trackBy: trackBySkillFn">
+          <p class="title">{{ userSkill.skill.title }}</p>
+          <span>
+            <div class="difficulty">
+              <span *ngFor="let level of getLevels(userSkill.skill)"
+                    [ngClass]="{'disapprove':
+                                  isDisapproved(userSkill.skillUpdate, level),
+                                'expect':
+                                  isExpected(userSkill.skillUpdate, level),
+                                'current-level':
+                                  checkLevel(userSkill.level, level)}"
+                    [tooltip]="getTechLevelTooltip(level)">
+              </span>
+            </div>
+            <div class="comment-wrapper"
+                *ngIf="isUpdate(userSkill.skillUpdate[0])">
+              <i class="fa fa-comment comment-icon"
+                *ngIf="showComment"
+                (click)="showComment(userSkill.skill.id)">
+              </i>
+              <app-skill-comments (closeComment)="showComment($event)"
+                                  [comment]="userSkill.skillUpdate[0].comment"
+                                  [approver]="userSkill.skillUpdate[0].approverId"
+                                  [ngClass]="{'comment-block': true,
+                                              'show': toggleComment === userSkill.skill.id}">
+              </app-skill-comments>
+            </div>
+            <div *ngIf="userSkill.skillUpdate[0].approved === null && canOperate()">
+              <button class="btn btn-xs btn-primary fa fa-thumbs-up"
+                      (click)="approve(userSkill.id, userSkill.skillUpdate[0])">
+              </button>
+              <button class="btn btn-xs btn-default fa fa-thumbs-down"
+                      (click)="disapprove(userSkill.id, userSkill.skillUpdate[0])">
+              </button>
+            </div>
+          </span>
+          <div class="update-date" *ngIf="userSkill.skillUpdate[0].updatedAt">
+            Last update: {{ userSkill.skillUpdate[0].updatedAt | date:'mediumDate' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

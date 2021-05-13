@@ -1,0 +1,39 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="wrap">
+  <div class="input-group">
+    <div class="input-group-addon">
+      <i class="fa fa-calendar"></i>
+    </div>
+    <app-period-date-picker
+      [(ngModel)]="filterDate"
+      (ngModelChange)="onDateChange()"
+    ></app-period-date-picker>
+  </div>
+
+  <div class="chart">
+    <div class="chart-title">
+      <span>Written update</span>
+      <p>{{ textTitle() }}</p>
+    </div>
+
+    <div class="chart-graph">
+      <ngx-charts-bar-vertical
+        [results]="statistics"
+        [yScaleMax]="100"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [showDataLabel]="true"
+        yAxisLabel='Percentage of written updates, per day'>
+
+        <ng-template #tooltipTemplate let-model="model">
+          <p>{{ model.name }}</p>
+          <span>Percent - <b>{{ model.value }} %</b></span>
+        </ng-template>
+
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+</div>

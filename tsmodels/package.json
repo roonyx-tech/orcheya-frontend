@@ -1,0 +1,78 @@
+{
+  "_args": [
+    [
+      "tsmodels@0.4.7",
+      "/home/andrey/project/orcheya/orcheya-frontend"
+    ]
+  ],
+  "_from": "tsmodels@0.4.7",
+  "_id": "tsmodels@0.4.7",
+  "_inBundle": false,
+  "_integrity": "sha512-7fePk7rin34tn4jAJO7Ku9gOtP+tDxtXouL+WPUirpQGyXVUcT9ID639ey8R4AGag7sCJeTpo1cUKggrlwd8IA==",
+  "_location": "/tsmodels",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "tsmodels@0.4.7",
+    "name": "tsmodels",
+    "escapedName": "tsmodels",
+    "rawSpec": "0.4.7",
+    "saveSpec": null,
+    "fetchSpec": "0.4.7"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/tsmodels/-/tsmodels-0.4.7.tgz",
+  "_spec": "0.4.7",
+  "_where": "/home/andrey/project/orcheya/orcheya-frontend",
+  "author": {
+    "name": "Igor Kasparov",
+    "email": "ikasparov.dev@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/ikasparov/tsmodels/issues"
+  },
+  "dependencies": {},
+  "description": "An implementation of models for TypeScript",
+  "devDependencies": {
+    "@types/jasmine": "^3.3.12",
+    "@types/node": "^12.0.0",
+    "awesome-typescript-loader": "^3.4.1",
+    "copy-webpack-plugin": "^4.4.1",
+    "jasmine": "^3.4.0",
+    "jasmine-console-reporter": "^3.1.0",
+    "ts-node": "^8.1.0",
+    "typescript": "^2.7.1",
+    "webpack": "^3.10.0"
+  },
+  "homepage": "https://github.com/ikasparov/tsmodels#readme",
+  "keywords": [
+    "typescript",
+    "ts",
+    "model",
+    "angular",
+    "ngx",
+    "angular-models",
+    "aliases",
+    "convert",
+    "instance"
+  ],
+  "license": "MIT",
+  "main": "package/index.js",
+  "name": "tsmodels",
+  "peerDependencies": {
+    "typescript": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikasparov/tsmodels.git"
+  },
+  "scripts": {
+    "package": "rimraf package && webpack",
+    "test": "jasmine --reporter=jasmine-console-reporter --config=jasmine.json"
+  },
+  "typings": "package/index.d.ts",
+  "version": "0.4.7"
+}

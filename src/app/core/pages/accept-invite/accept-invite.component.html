@@ -1,0 +1,80 @@
+<div class="welcome-page">
+
+  <a class="logo" [routerLink]="['/']">
+    <img src="/assets/company-logo.svg" alt="Roonyx">
+  </a>
+
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="center">Welcome to Roonyx</h3>
+      <p>
+        This page will help you discover our common documents and tools to start work in our team comfortable and  quick.
+        Welcome aboard, {{ response?.fullName }}!
+      </p>
+    </div>
+
+    <div *ngIf="form" class="box-body">
+      <form class="form-horizontal" [formGroup]="form">
+        <p class="main-label title" [class.successed]="isValidPassword">
+          Set a new password for this application
+        </p>
+        <div class="form-item">
+          <label for="password" class="control-label">Password*</label>
+          <div class="input-field">
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Enter password..."
+              name="password"
+            />
+            <span class="error">{{ hasError('password') ? textError('password') : '' }}</span>
+          </div>
+        </div>
+        <div class="form-item">
+          <label for="confirmate" class="control-label">Confirmate password*</label>
+          <div class="input-field">
+            <input
+              type="password"
+              class="form-control"
+              formControlName="confirmate"
+              placeholder="Repeat password..."
+              name="confirmate"
+            />
+            <span class="error" *ngIf="hasError('confirmate')">
+              {{ hasError('confirmate') ? textError('confirmate') : '' }}
+            </span>
+            <span class="error" *ngIf="!!passwordReplayError">
+              {{ passwordReplayError }}
+            </span>
+          </div>
+        </div>
+        <p>Ниже представлен список документов, который позволит вам ознакомится с
+            рабочими процессами и ценностями Roonyx. Изучите их или сохраните ссылки
+            чтобы вернутся к ним позже.</p>
+        <div *ngFor="let doc of documentsBlock.controls; let i = index" formArrayName="documents">
+          <div class="form-check" [formGroupName]="i">
+            <input type="checkbox" id="doc-{{ i }}" formControlName="read">
+            <label class="main-label" for="doc-{{ i }}">
+              <p [class.successed]="doc.value.read">{{ doc.value.name }}</p>
+              <a href="http://{{ doc.value.link }}" target="_blank">{{ doc.value.link }}</a>
+            </label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+            type="button"
+            (click)="acceptInvitation()"
+            triggers="pointerenter:pointerout"
+            [tooltip]="!form.valid ? 'Для продолжения регистрации установите пароль и ознакомьтесь со всеми документами на странице.' : null"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

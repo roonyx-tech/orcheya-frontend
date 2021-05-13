@@ -1,0 +1,20 @@
+<div>
+  <ul class="users-list">
+    <li *ngFor="let user of userList">
+      <a (click)="onClick(user)">
+        <img
+          [src]="user.avatar.medium"
+          alt="User avatar">
+      </a>
+      <a class="users-list-name" (click)="onClick(user)">{{ user?.fullName }}</a>
+      <div class="achievement">
+        <img *ngIf="showAchievements && user.favoriteAchievement"
+             [src]="user?.favoriteAchievement.image.url" alt="achievement"
+             [style]="{ 'background': generationGradient(user.favoriteAchievement), 'padding': user.favoriteAchievement.kind === 'auto' ? '5px' : null}">
+        <span class="users-list-date"
+        *ngFor="let role of user.roles"
+        [style.width]="showAchievements && user.favoriteAchievement ? '45%' : '100%'">{{ role.name }}</span>
+      </div>
+    </li>
+  </ul>
+</div>

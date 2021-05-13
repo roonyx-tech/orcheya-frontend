@@ -1,0 +1,14 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: $gray-50;
+}

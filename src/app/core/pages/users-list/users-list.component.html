@@ -1,0 +1,55 @@
+<section class="content-header">
+  <h1>
+    Members List
+  </h1>
+  <ol class="breadcrumb">
+    <li><a [routerLink]="['/']">Home</a></li>
+    <li class="active">Members List</li>
+  </ol>
+</section>
+
+<br>
+
+<section class="content">
+
+  <div class="row">
+    <form class="col-sm-12"
+          (ngSubmit)="onButtonClick()"
+          #form="ngForm">
+      <div class="col-lg-7">
+        <div class="form-group">
+          <input type="text"
+                 #input
+                 name="search"
+                 class="form-control"
+                 placeholder="Search..."
+                 [(ngModel)]="filter.search"
+                 (keyup)="onSearchDelay()">
+        </div>
+      </div>
+      <div class="group col-lg-4">
+        <div class="group-role form-group">
+          <select name="role"
+                  class="form-control"
+                  ngModel
+                  (change)="onRoleChanged()">
+            <option ngValue>All roles</option>
+            <option *ngFor="let role of roles"
+                    [value]="role.id">
+              {{ role.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <app-user-list [userList]="usersList" [showAchievements]="showAchievements" (userClicked)="showProfile($event.id)"></app-user-list>
+
+  <div *ngIf="canLoadNext"
+       inViewport
+       [inViewportOptions]="{ partial: false }"
+       (inViewportAction)="onIntersection($event)">
+  </div>
+
+</section>

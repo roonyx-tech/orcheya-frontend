@@ -1,0 +1,145 @@
+<section class="content-header">
+  <h1>
+    Updates
+  </h1>
+  <ol class="breadcrumb">
+    <li><a [routerLink]="['/']">Home</a></li>
+    <li class="active">Updates</li>
+  </ol>
+</section>
+
+<div class="wrap">
+  <div *ngIf="!this.user">
+    <span class="btn-group" btnRadioGroup [(ngModel)]="updateTab">
+      <label class="btn btn-outline"
+             [btnRadio]="radioValue.noUpdates" tabindex="0" role="button">No updates</label>
+      <label class="btn btn-outline"
+             [btnRadio]="radioValue.updates" tabindex="0" role="button">Updates</label>
+      <label class="btn btn-outline"
+             [btnRadio]="radioValue.statistics" tabindex="0" role="button">Statistics</label>
+    </span>
+  </div>
+  <div *ngIf="updateTab !== radioValue.statistics" class="filter-controls">
+    <div class="input-group" *ngIf="!hideProjectFilter">
+      <app-user-select-async [receivedUsers]="user && [user]"
+                             (selectUsers)="onUserChange($event)"
+                             [isCloseOnSelect]="false"
+                             [isMultiple]="true">
+      </app-user-select-async>
+    </div>
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+      </div>
+      <app-period-date-picker [(ngModel)]="filterDate" (ngModelChange)="onDateChange()"></app-period-date-picker>
+    </div>
+  </div>
+  <ng-container *ngIf="data?.updates.length">
+    <ul *ngIf="updateTab === radioValue.updates" class="timeline timeline-inverse">
+      <ng-container *ngFor="let update of data.updates">
+        <li class="time-label"
+            *ngIf="isShouldShowRedLabel(update)">
+        <span class="date-update">
+          {{ showDate(update.date, 'D MMM, YYYY') }}
+        </span>
+        </li>
+        <li>
+          <i class="fa fa-file-o bg-blue"></i>
+
+          <div class="timeline-item">
+          <span class="time">
+            <i class="fa fa-clock-o"></i> {{ showDate(update.date, 'HH mm') }}
+          </span>
+
+            <h3 class="timeline-header">
+              <b class="action"
+                 (click)="goToProfile(update.user.id)">
+                {{ update.user.fullName }}
+              </b> {{ showDate(update.date, 'MMMM D YYYY') }}
+            </h3>
+
+            <div class="timeline-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <strong><i class="fa fa-thumbs-o-up margin-r-5"></i> Task(s) I did today:</strong>
+                  <p
+                     *ngFor="let madeLine of update.made.split('\n')"
+                     [innerHTML]="madeLine">
+                  </p>
+
+                  <strong><i class="fa fa-check-square-o margin-r-5"></i> What I plan for tomorrow:</strong>
+                  <p
+                     *ngFor="let planLine of update.planning.split('\n')"
+                     [innerHTML]="planLine">
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <strong><i class="fa fa-frown-o margin-r-5"></i> Any issues:</strong>
+                  <p
+                     *ngFor="let issueLine of update.issues.split('\n')"
+                     [innerHTML]="issueLine">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </li>
+      </ng-container>
+      <li>
+        <div class="spin-wrapper" *ngIf="infinity && !enough">
+          <div class="sk-folding-cube">
+            <div class="sk-cube1 sk-cube"></div>
+            <div class="sk-cube2 sk-cube"></div>
+            <div class="sk-cube4 sk-cube"></div>
+            <div class="sk-cube3 sk-cube"></div>
+          </div>
+        </div>
+        <i class="fa fa-clock-o bg-gray"></i>
+      </li>
+    </ul>
+
+    <ng-container *ngIf="updateTab === radioValue.noUpdates">
+      <ul class="timeline timeline-inverse">
+        <ng-container *ngFor="let info of usersWithoutUpdates?.noUpdates">
+          <li class="time-label">
+            <span class="date-update">
+              {{ showDate(info.date, 'D MMM, YYYY') }}
+            </span>
+          </li>
+          <li>
+            <i class="fa fa-file-o bg-blue"></i>
+
+            <div class="timeline-item">
+              <app-user-list [userList]="info.usersWithoutUpdate" (userClicked)="goToProfile($event.id)"></app-user-list>
+            </div>
+          </li>
+        </ng-container>
+        <li>
+          <div class="spin-wrapper" *ngIf="infinity && !enoughWithout">
+            <div class="sk-folding-cube">
+              <div class="sk-cube1 sk-cube"></div>
+              <div class="sk-cube2 sk-cube"></div>
+              <div class="sk-cube4 sk-cube"></div>
+              <div class="sk-cube3 sk-cube"></div>
+            </div>
+          </div>
+          <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+      </ul>
+      <h3 *ngIf="!usersWithoutUpdates?.noUpdates?.length && enoughWithout" [style]="{'text-align': 'center'}">No information availiable</h3>
+    </ng-container>
+
+    <ng-container *ngIf="updateTab === radioValue.statistics">
+      <app-update-statistics></app-update-statistics>
+    </ng-container>
+
+    <ng-container *ngIf="infinity">
+      <div inViewport
+           [inViewportOptions]="{ partial: false }"
+           (inViewportAction)="onIntersection($event)">
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

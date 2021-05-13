@@ -1,0 +1,253 @@
+@import '_variables';
+
+$c-level-current: $blue-400;
+$c-level-disapprove: $red-400;
+$c-level-expect: $azure-500;
+$c-level: $gray-100;
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 5px;
+
+    .level {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      margin-right: 5px;
+    }
+
+    .empty {
+      background-color: $gray-100;
+    }
+
+    .current {
+      background-color: $blue-400;
+    }
+
+    .expected {
+      background-color: $azure-500;
+    }
+
+    .disapproved {
+      background-color: $red-400;
+    }
+  }
+}
+
+.no-skills {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.skills-list {
+  position: relative;
+  padding: 15px;
+  box-sizing: border-box;
+
+  .skill-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @media (min-width: 768px) {
+      > div {
+        width: 50%;
+      }
+    }
+  }
+
+  .skill-row, .visit-skill-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 10px 10px;
+
+    .title {
+      width: 150px;
+      margin: 0;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    > span {
+      display: flex;
+      align-items: center;
+      min-width: 270px;
+
+      .difficulty {
+        width: 240px;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: center;
+
+        input {
+          display: none;
+        }
+
+        label, > span {
+          width: 20px;
+          height: 20px;
+          border-radius: 100%;
+          box-sizing: border-box;
+          margin: 0 2px;
+          overflow: hidden;
+          background-color: $c-level;
+          transition: all .3s;
+        }
+
+        .disapprove {
+          border: 2px solid $c-level-disapprove;
+          background-color: $c-level-disapprove;
+        }
+
+        .expect {
+          border: 2px solid $c-level-expect;
+          background-color: $c-level-expect;
+          box-shadow: inset 0 0 3px $c-level-expect;
+        }
+
+        .current-level {
+          background-color: $c-level-current;
+        }
+      }
+
+      .comment-wrapper {
+        position: relative;
+
+        .comment-icon {
+          font-size: 16px;
+          color: $c-level-checked;
+          cursor: pointer;
+          transition: .3s;
+
+          &:hover {
+            color: $c-level-hover;
+          }
+        }
+
+        .comment-block {
+          position: absolute;
+          top: 25px;
+          right: 5px;
+          display: none;
+          word-wrap: break-word;
+          z-index: 5;
+        }
+
+        .show {
+          display: block;
+        }
+      }
+    }
+
+    .update-date {
+      width: 100%;
+      text-align: left;
+      font-size: 9px;
+    }
+  }
+
+  //Current user styles
+  .skill-row {
+    .difficulty {
+      input {
+        &:checked ~ label {
+          background-color: $c-level-checked;
+        }
+
+        &:checked ~ .current-level {
+          background-color: $c-level-current-checked;
+        }
+      }
+
+      label {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        box-sizing: border-box;
+        margin: 0 2px;
+        overflow: hidden;
+        background-color: $c-level;
+        transition: all .3s;
+      }
+
+      label:hover,
+      input:hover ~ label {
+        background-color: $c-level-hover;
+      }
+
+      label:hover,
+      input:hover ~ .current-level {
+        background-color: $c-level-current-hover;
+      }
+    }
+
+    .delete-icon {
+      cursor: pointer;
+      color: $red-600;
+      margin-right: 15px;
+    }
+  }
+
+  .btn-save {
+    width: 200px;
+    margin: 20px 5px 0;
+  }
+
+  .language-skills {
+    .skill-row {
+      .difficulty {
+        input {
+          &:checked ~ label {
+            background-color: $c-level;
+          }
+
+          &:checked ~ .current-level {
+            background-color: $c-level-current;
+          }
+        }
+
+        label {
+          cursor: pointer;
+        }
+
+        label:hover,
+        input:hover ~ label {
+          background-color: $c-level-hover;
+        }
+
+        label:hover,
+        input:hover ~ .current-level {
+          background-color: $c-level-current-hover;
+        }
+      }
+    }
+  }
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.title-group {
+  font-size: 15px;
+  margin: 10px 0 10px 10px;
+  display: inline-block;
+  color: $blue-700;
+  background: $blue-100;
+}

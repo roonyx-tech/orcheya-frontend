@@ -1,0 +1,54 @@
+<section *ngIf="chartPie" class="wrap">
+  <div class="chart-pie" *ngIf="projectByHours && projectByPeople">
+    <highcharts-chart [Highcharts]="Highcharts"
+                      [options]="projectByHours"
+                      style="width:100%"
+                      (load)="projectByHours = $event.context">
+    </highcharts-chart>
+    <highcharts-chart [Highcharts]="Highcharts"
+                      [options]="projectByPeople"
+                      style="width:100%"
+                      (load)="projectByPeople = $event.context">
+    </highcharts-chart>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="chart"
+           *ngIf="chartOptions">
+    <highcharts-chart [Highcharts]="Highcharts"
+                      [options]="chartOptions"
+                      style="width:100%"
+                      (load)="chart = $event.context">
+    </highcharts-chart>
+
+    <div class="chart-result">
+      <h4>Summary</h4>
+      <ul>
+        <li>
+          <div><span class="text-bold">Work days:</span> {{ dash?.workdays }}</div>
+          <div><span class="text-bold">Developers:</span> {{ dash?.developers }}</div>
+          <div><span class="text-bold">Others:</span> {{ dash?.other }}</div>
+        </li>
+        <li>
+          <div><span class="text-bold">Hours:</span> {{ dash?.hours | hours }}</div>
+          <div><span class="text-bold">Worked hours:</span> {{ dash?.workedHours | hours }}</div>
+          <div><span class="text-bold">Paid hours:</span> {{ dash?.paidHours | hours }}</div>
+        </li>
+        <li>
+          <div><span class="text-bold">Service load:</span> {{ dash?.totalPaid }}%</div>
+          <div><span class="text-bold">Active projects:</span> {{ dash?.activeProjects }}</div>
+          <div><span class="text-bold">Paid projects:</span> {{ dash?.paidProjects }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap dashboard">
+  <section *ngIf="!chartOptions">
+    <div class="loading">
+      <i class="fa fa-refresh fa-spin fa-3x"></i>
+    </div>
+  </section>
+</section>

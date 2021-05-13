@@ -1,0 +1,32 @@
+@import 'variables';
+
+.box-url-invite {
+  display: flex;
+  align-items: center;
+  height: 230px;
+  span {
+    word-break: break-all;
+    text-align: center;
+    cursor: pointer;
+    font-size: 22px;
+    padding: 5px;
+    i {
+      margin-left: 5px;
+    }
+    &:hover {
+      color: $black;
+      background-color: $green;
+      border-radius: 5px;
+    }
+  }
+}
+
+h2 {
+  margin: 0;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+

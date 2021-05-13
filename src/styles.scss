@@ -1,0 +1,458 @@
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import 'adminlte';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import 'styles/changing-width-sidebar';
+@import './styles/variables';
+@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss';
+
+.fc-license-message {
+  display: none !important;
+}
+
+a {
+  cursor: pointer;
+  color: $gray-300;
+}
+
+.nav-tabs {
+  .nav-item {
+    .nav-link {
+      &.active {
+        color: $blue-500;
+        background-color: $white;
+        border-top: 3px solid $primary-active;
+      }
+    }
+  }
+}
+
+.relative {
+  position: relative !important;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: $gray-50;
+}
+
+// Directives
+img[appImageUpload] {
+  transition: filter .3s ease-in-out;
+
+  & + .appImageUpload {
+    bottom: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 85%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    transition: bottom .5s cubic-bezier(.46, .46, .6, 1.49), opacity .5s ease;
+
+    &.open {
+      bottom: 40%;
+      opacity: 1;
+    }
+  }
+}
+
+// Modals
+.modal-center {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  height: calc(100vh - 60px);
+  justify-content: center;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  .modal-content {
+    width: 100%;
+  }
+}
+
+.modal-content {
+  background-color: $white;
+}
+
+.modal {
+  background-color: transparent;
+}
+
+.modal-dialog-centered {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
+}
+
+.carousel {
+  .carousel-control.left,
+  .carousel-control.right {
+    display: none;
+  }
+
+  .carousel-inner {
+    overflow: visible;
+
+    & > .item {
+      display: block;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      z-index: -1;
+
+      &.active {
+        animation-timing-function: cubic-bezier(.895, .03, .685, .22);
+        opacity: 1;
+        position: relative;
+        transition: .5s;
+        z-index: 2;
+      }
+    }
+  }
+}
+
+.modal-simple {
+  height: 30%;
+  max-width: 800px;
+  min-height: 400px;
+  min-width: 700px;
+  width: 60%;
+}
+
+.modal-confirmation {
+  height: max-content;
+  width: 400px;
+}
+
+.modal-content .close {
+  color: $gray-100;
+  opacity: 1;
+
+  &:hover {
+    color: $gray-200;
+  }
+}
+
+// Modal quest
+.quest-modal {
+  height: 90%;
+  margin: 5vh auto;
+  max-width: 1200px;
+  width: 90%;
+
+  .modal-content {
+    height: 100%;
+  }
+}
+
+// chrome, removing blue border for all inputs
+:focus {
+  outline: 0 !important;
+}
+
+app-loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+// ng-select
+
+.dark-select.ng-select {
+  height: 33px;
+
+  &.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+    border-color: $gray-100;
+    color: $gray-900;
+
+    .ng-value-icon.left {
+      border-right: 1px solid $second-border-color;
+    }
+
+    .ng-value-icon:hover {
+      background-color: $blue-200;
+    }
+  }
+
+  &.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+    top: 7px;
+  }
+
+  .ng-select-container {
+    border-radius: 4px;
+    background-color: $white;
+    border-color: $gray-100;
+  }
+
+  &::ng-deep {
+    &.ng-control  {
+      border-radius: 0;
+      box-shadow: none;
+      border-color: $second-border-color;
+      color: $primary-text-color;
+      background-color: $primary-bg-color;
+    }
+
+    &.ng-dropdown-panel .ng-option {
+      color: $primary-text-color;
+      background-color: $box-bg-color;
+
+      &:hover {
+        background-color: #3c8dbc;
+      }
+    }
+  }
+
+  &.ng-select-opened>.ng-select-container {
+    background: $white;
+  }
+}
+
+.dark-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background: $white;
+  border-color: $gray-100;
+  color: $gray-900;
+
+  &.ng-option-marked {
+    background-color: $gray-100;
+    color: $gray-900;
+  }
+}
+
+.dark-select .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child {
+  border-radius: 0;
+}
+
+.ng-select div, .ng-select input, .ng-select span {
+  box-sizing: border-box;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  background-color: $blue-100;
+}
+
+// input
+input:-internal-autofill-selected {
+  background-color: #333;
+  color: white;
+}
+
+// datapicker
+
+.dark-datepicker.bs-datepicker {
+  background-color: $white;
+
+  .bs-datepicker-body table.days td.active:not(.select-start):before, .bs-datepicker-body table.days td.in-range:not(.select-start):before, .bs-datepicker-body table.days span.active:not(.select-start):before, .bs-datepicker-body table.days span.in-range:not(.select-start):before {
+    background-color: $gray-50;
+  }
+
+  .bs-datepicker-body table td.is-highlighted:not(.disabled):not(.selected) span, .bs-datepicker-body table td span.is-highlighted:not(.disabled):not(.selected) {
+    background-color: $gray-50;
+  }
+
+  .bs-datepicker-body table td {
+    color: $gray-500;
+  }
+
+  .bs-datepicker-body table td span.disabled, .bs-datepicker-body table td.disabled span {
+    color: $gray-100;
+  }
+}
+
+// calendar
+
+.fc-head {
+  background-color: $gray-25;
+  color: $gray-900;
+}
+
+.fc-event-container a {
+  color: $gray-900;
+}
+
+.fc-rows {
+  color: $gray-900;
+}
+
+.fc-nonbusiness {
+  background-color: $gray-50;
+}
+
+.fc-view-container {
+  background-color: $white;
+}
+
+.fc-unthemed td {
+  border-color: $gray-100;
+}
+
+.fc-widget-header.fc-today,
+.fc-unthemed td.fc-today {
+  background-color: $red-50;
+}
+
+.fc-button {
+  background-color: $white;
+  border-color: $blue-500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: $blue-500;
+
+  &:hover {
+    background-color: $blue-500 !important;
+    border: 1px $blue-500 solid;
+  }
+
+  &:focus {
+    color: $white;
+    background-color: $blue-500;
+    border: 1px $blue-500 solid;
+  }
+}
+
+.fc-button.fc-button-active, .fc-button-primary:not(:disabled).fc-button-active {
+  color: #fff;
+  background-color: $blue-500;
+  border-color: $blue-500;
+}
+
+.fc-button:hover,
+.fc-button:active,
+.fc-button.hover,
+.fc-button-primary:not(:disabled).fc-button-active:focus {
+  background-color: $blue-500;
+  border-color: $blue-500;
+  box-shadow: none;
+}
+
+.fc-button-primary:disabled {
+  background-color: $gray-400;
+  border-color: $blue-500;
+  cursor: not-allowed;
+
+  &:hover {
+    color: $white;
+    border-color: $blue-500;
+  }
+}
+
+// popover
+
+.popover {
+  background-color: #2d2d2d;
+  border-radius: 0;
+}
+
+.popover.bottom > .arrow:after {
+  border-bottom-color: #2d2d2d;
+}
+
+.achievement-tooltip {
+  p {
+    font-size: 16px;
+    margin: 3px;
+  }
+  span {
+    display: block;
+    font-size: 14px;
+    margin: 3px;
+  }
+}
+
+//Custom border-radius
+
+.btn, .form-control {
+  border-radius: 4px;
+}
+
+.form-control {
+  background: $white;
+  border: 1px $gray-100 solid;
+  color: $gray-900;
+}
+
+//Button styles
+
+.btn-primary, .btn-outline-primary {
+  border: 1px $blue-500 solid;
+}
+
+.btn-primary {
+  background: $blue-400;
+  color: $white;
+
+  &:hover {
+    background: $blue-500;
+    border: 1px $blue-700 solid;
+  }
+
+  &:focus {
+    background: $blue-600;
+    border: 1px $blue-700 solid;
+  }
+}
+
+.btn-outline-primary {
+  background: $white;
+  color: $blue-500;
+
+  &:hover,
+  &:focus {
+    background: $blue-500;
+    color: $white;
+  }
+}
+
+.btn-outline {
+  background-color: $white;
+  border: 1px $gray-100 solid;
+  color: $gray-900;
+
+  &:hover,
+  &.active, &:active {
+    border-color: $gray-100;
+    color: $gray-900;
+  }
+
+  &.active, &:active {
+    background-color: $gray-100;
+
+  }
+}
+
+.btn-default {
+  background: $gray-200;
+  border: 1px $gray-300 solid;
+  color: $white;
+
+  &:hover {
+    background: $gray-300;
+    border: 1px $gray-400 solid;
+  }
+
+  &:active,
+  &:focus {
+    background: $gray-400;
+    border: 1px $gray-500 solid;
+    color: $white;
+  }
+}
+
+//Planning
+.fc-event,
+.fc-event:hover {
+  color: $blue-600;
+}
+
+

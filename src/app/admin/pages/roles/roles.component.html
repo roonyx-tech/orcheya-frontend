@@ -1,0 +1,50 @@
+<section class="content-header">
+  <h1>Manage Roles and Permissions</h1>
+</section>
+<div class="content">
+  <div class="col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Roles</h3>
+
+        <div class="box-tools">
+          <button type="button"
+                  class="btn btn-primary btn-sm"
+                  (click)="addRole()">
+            Add role
+          </button>
+        </div>
+      </div>
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Count of users</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let role of roles; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ role.name }} </td>
+            <td>{{ role.usersCount }}</td>
+            <th class="no-padding text-right">
+              <a class="btn btn-primary btn-flat" (click)="editRole(role)">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <a (click)="remove(role)" class="btn btn-danger btn-flat">
+                <i class="fa fa-trash"></i>
+              </a>
+            </th>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="roles && roles.length <= 0" class="text-center">
+          No data to display
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

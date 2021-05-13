@@ -1,0 +1,16 @@
+<section class="content-header">
+  <h1>FAQ</h1>
+</section>
+<section class="content">
+  <ul class="sections-list" *ngIf="(sections$ | async) as sections; else loading">
+    <li *ngFor="let section of sections">
+      <a [routerLink]="section.id" class="section-name">
+        <div class="section-img" style="background-image: url({{section.image?.url}})"></div>
+        {{ section.title }}
+      </a>
+    </li>
+  </ul>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
+</section>

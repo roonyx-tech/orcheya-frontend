@@ -1,0 +1,24 @@
+<div class="modal-header" *ngIf="user">
+  <h4 class="modal-title pull-left">
+    {{ showNameOrEmail() }}
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <span>Do you want remove this user?</span>
+</div>
+
+<div class="modal-footer">
+  <a class="btn btn-danger"
+     [class.disabled]="isHimself"
+     (click)="delete()">
+    Delete
+  </a>
+  <a class="btn btn-primary"
+     (click)="bsModalRef.hide()">
+    Cancel
+  </a>
+</div>

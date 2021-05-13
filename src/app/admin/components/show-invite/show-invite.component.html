@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h2>Invite link </h2>
+  <span>Send the link to new user, please</span>
+</div>
+<div class="modal-body">
+  <div class="box-url-invite">
+   <span tooltip="Copy link invite"
+         ngxClipboard
+         (click)="notifier()"
+         [cbContent]="urlInvite">
+     {{ urlInvite }}
+     <i class="fa fa-files-o"></i>
+   </span>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" (click)="closeModal()">Close</button>
+</div>

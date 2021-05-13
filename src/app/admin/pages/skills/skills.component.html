@@ -1,0 +1,83 @@
+<section class="content-header">
+  <h1>Manage skills</h1>
+</section>
+<div class="content">
+  <div class="col-sm-12">
+    <app-difficulty-levels
+      [difficultyLevels]="difficultyLevels"
+      (diffLevelsOutput)="receiveDifficultyLevels($event)"
+    >
+    </app-difficulty-levels>
+    <app-skill-types [skillTypes]="skillTypes"
+                     (SkillTypesOutput)="skillTypes = $event"
+                     (SkillDeleteOutput)="skillDeleteAction = $event">
+    </app-skill-types>
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Skills</h3>
+        <div class="box-tools">
+          <button type="button"
+                  class="btn btn-primary btn-sm"
+                  (click)="addSkill()">
+            Add skill
+          </button>
+        </div>
+      </div>
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Difficulty</th>
+            <th>Type</th>
+            <th>Variants</th>
+            <th>ID</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let skill of skills; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ skill.title }} </td>
+            <td *ngIf="difficultyLevels">{{ getDifficulty(skill) }}</td>
+            <td>{{ skillTypes.length && skill.skillType ? getSkillType(skill) : '' }}</td>
+            <td>{{ skill.variants }}</td>
+            <td>{{ skill.id }}</td>
+            <th class="no-padding text-right"
+                *ngIf="skill.approved; else offer">
+              <a class="btn btn-primary btn-flat btn-width"
+                 (click)="editSkill(skill)">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <a class="btn btn-danger btn-flat btn-width"
+                 (click)="delete(skill)">
+                <i class="fa fa-trash"></i>
+              </a>
+            </th>
+            <ng-template  #offer>
+              <th class="no-padding text-right">
+                <a class="btn btn-primary btn-flat btn-width"
+                   (click)="editSkill(skill)">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a class="btn btn-primary btn-flat btn-width"
+                   (click)="approve(skill)">
+                  <i class="fa fa-thumbs-o-up"></i>
+                </a>
+                <a class="btn btn-danger btn-flat btn-width"
+                   (click)="disapprove(skill)">
+                  <i class="fa fa-thumbs-o-down"></i>
+                </a>
+              </th>
+            </ng-template>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="skills && skills.length <= 0" class="text-center">
+          No data to display
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
